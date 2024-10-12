@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -Wall -Werror -Wextra -g
+CFLAGS := -Wall -Werror -Wextra
 NAME := libft
 
 SRCS			:=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
@@ -20,17 +20,17 @@ BONUS_OBJS		:= $(BONUS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME).a $(OBJS)
+	@ar rcs $(NAME).a $(OBJS)
 
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+	@rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean:	clean
-	rm -f $(NAME).a
+	@rm -f $(NAME).a
 
 re:	fclean $(NAME)
 
 bonus:	$(OBJS) $(BONUS_OBJS)
-	ar rcs $(NAME).a $(OBJS) $(BONUS_OBJS)
+	@ar rcs $(NAME).a $(OBJS) $(BONUS_OBJS)
 
 .PNONY: all claen fclean re bonus
