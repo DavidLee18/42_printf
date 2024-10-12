@@ -27,12 +27,27 @@ int	ft_printf(const char *fmt, ...)
 
 int	ft_vprintf(const char *fmt, va_list args)
 {
-	t_arg_type	*arg;
+	int			*arg_idx;
+	int			flag;
+	int			flag2;
+	int			flag3;
+	int			new_idx;
 
-	arg = fst_fmt_arg(fmt);
-	if (!arg)
+	arg_idx = fst_fmt_arg(fmt);
+	if (!arg_idx)
 		return ((int)write(STDOUT_FILENO, fmt, ft_strlen(fmt)));
-
+	flag = (int)write(STDOUT_FILENO, fmt, *arg_idx);
+	new_idx = *arg_idx + 2;
+	free(arg_idx);
+	if (flag < 0)
+		return (flag);
+	flag2 = print_fmt(fmt[new_idx - 1]);
+	if (flag2 < 0)
+		return (flag2);
+	if (fmt[new_idx])
+		return (sum_or_error(flag, flag2, ft_vprintf(fmt + new_idx, args)));
+	else
+		return (flag + flag2);
 }
 
 int	is_fmt_arg(const char *str)
@@ -43,9 +58,9 @@ int	is_fmt_arg(const char *str)
 			|| str[1] == '%'));
 }
 
-t_arg_type	*fst_fmt_arg(const char *fmt)
+int	*fst_fmt_arg(const char *fmt)
 {
-	t_arg_type	*res;
+	int			*res;
 	int			i;
 
 	if (!fmt)
@@ -55,30 +70,12 @@ t_arg_type	*fst_fmt_arg(const char *fmt)
 	{
 		if (is_fmt_arg(fmt + i))
 		{
-			res = (t_arg_type *)malloc(sizeof(t_arg_type));
+			res = (int *)malloc(sizeof(int));
 			if (!res)
 				return (NULL);
-			res->idx = i;
-			res->type = fmt[i + 1];
+			*res = i;
 			return (res);
 		}
 	}
 	return (NULL);
-}
-
-int	fmt_arg_count(const char *str)
-{
-	int	i;
-	int	cnt;
-
-	if (!str)
-		return (-1);
-	i = -1;
-	cnt = 0;
-	while (str[++i])
-	{
-		if (is_fmt_arg(str + i))
-			cnt++;
-	}
-	return (cnt);
 }
