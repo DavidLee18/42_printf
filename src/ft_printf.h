@@ -24,6 +24,12 @@ typedef struct s_arg_type
 
 int			fmt_arg_count(const char *str);
 
-t_arg_type	*fmt_args(const char *fmt, int size);
+int			ft_printf(const char *fmt, ...);
+
+int			ft_vprintf(const char *fmt, va_list args);
+
+t_arg_type	*fst_fmt_arg(const char *fmt);
+
+int			is_fmt_arg(const char *cs);
 
 #endif
