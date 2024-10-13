@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf2.c                                       :+:      :+:    :+:   */
+/*   vprint_fmt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,22 +14,27 @@
 
 int	vprint_fmt(const char t, va_list args)
 {
+	int	res1;
+
 	if (t == 'c')
 		return (vprint_chr(args));
 	else if (t == 's')
 		return (vprint_str(args));
-	else if (t == 'p' || t == 'x')
+	else if (t == 'x')
 		return (vprint_hex(args));
 	else if (t == 'X')
 		return (vprint_hex_big(args));
-	else if (t == 'i')
+	else if (t == 'i' || t == 'd')
 		return (vprint_int(args));
 	else if (t == 'u')
 		return (vprint_uint(args));
-	else if (t == 'd')
-		return (vprint_dec(args));
 	else if (t == '%')
 		return ((int)write(STDOUT_FILENO, "%", 1));
+	else if (t == 'p')
+		return (on_success(
+				(int)write(STDOUT_FILENO, "0x", 2), vprint_hex(args)));
+	else
+		return (-1);
 }
 
 int	vprint_chr(va_list args)
@@ -51,6 +56,22 @@ int	vprint_str(va_list args)
 	return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
 }
 
-int	vprint_hex(va_list args);
+int	vprint_int(va_list args)
+{
+	int		x;
+	char	*str;
 
-int	vprint_hex_big(va_list args);
+	x = va_arg(args, int);
+	str = ft_itoa(x);
+	return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
+}
+
+int	vprint_uint(va_list args)
+{
+	unsigned int	x;
+	char			*str;
+
+	x = va_arg(args, (unsigned int));
+	str = ft_utoa(x);
+	return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
+}

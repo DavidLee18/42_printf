@@ -40,6 +40,10 @@ int			vprint_int(va_list args);
 
 int			vprint_uint(va_list args);
 
-int			vprint_dec(va_list args);
+char		*ft_utoa(unsigned int u);
+
+int			on_success(const int i, const int j);
+
+int			ft_ulog(const unsigned int base, const unsigned int n);
 
 #endif
