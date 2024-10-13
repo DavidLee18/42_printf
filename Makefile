@@ -5,7 +5,7 @@ NAME := libftprintf.a
 BUILD_DIR := build
 SRC_DIR := src
 
-CS := ft_utox.c vprint_hex.c vprint_fmt.c ft_printf.c
+CS := ft_printf.c ft_utox.c vprint_hex.c vprint_fmt.c
 SRCS := $(CS:%=$(SRC_DIR)/%)
 OBJS := $(CS:%.c=$(BUILD_DIR)/%.o)
 
