@@ -23,7 +23,7 @@ int	vprint_fmt(const char t, va_list args)
 	else if (t == 'x')
 		return (vprint_hex(args));
 	else if (t == 'X')
-		return (vprint_hex_big(args));
+		return (vprint_hex_(args));
 	else if (t == 'i' || t == 'd')
 		return (vprint_int(args));
 	else if (t == 'u')

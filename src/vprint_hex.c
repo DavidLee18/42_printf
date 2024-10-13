@@ -12,12 +12,66 @@
 
 #include "ft_printf.h"
 
-int	vprint_hex(va_list args);
+int	vprint_hex(va_list args)
+{
+	unsigned int	u;
+	char			*str;
+	int				res;
 
-int	vprint_hex_big(va_list args);
+	u = va_arg(args, (unsigned int));
+	str = ft_utox(u);
+	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+	free(str);
+	return (res);
+}
 
-char	*ft_utoa(unsigned int u);
+int	vprint_hex_(va_list args)
+{
+	unsigned int	u;
+	char			*str;
+	int				res;
 
-int	von_success(const int i, int (*f)(va_list), va_list args);
+	u = va_arg(args, (unsigned int));
+	str = ft_utox_(u);
+	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+	free(str);
+	return (res);
+}
 
-int	ft_ulog(const unsigned int base, const unsigned int n);
+char	*ft_utoa(unsigned int u)
+{
+	char			*str;
+	int				dgt_len;
+	unsigned int	n;
+
+	n = u;
+	dgt_len = ft_ulog(10, u);
+	if (dgt_len == -1)
+		dgt_len = 0;
+	str = (char *)ft_calloc(dgt_len + 2, sizeof(char));
+	if (!str)
+		return (NULL);
+	str[dgt_len + 1] = NULL;
+	while (dgt_len >= 0)
+	{
+		str[dgt_len--] = '0' + (n % 10);
+		n /= 10;
+	}
+	return (str);
+}
+
+int	von_success(const int i, int (*f)(va_list), va_list args)
+{
+	if (i < 0)
+		return (i);
+	return (i + (*f)(args));
+}
+
+int	ft_ulog(const unsigned int base, const unsigned int n)
+{
+	if (base == 0 || base == 1 || n == 0)
+		return (-1);
+	else if (n < base)
+		return (0);
+	return (1 + ft_ulog(base, n / base));
+}

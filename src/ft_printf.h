@@ -34,7 +34,7 @@ int			vprint_str(va_list args);
 
 int			vprint_hex(va_list args);
 
-int			vprint_hex_big(va_list args);
+int			vprint_hex_(va_list args);
 
 int			vprint_int(va_list args);
 
@@ -45,5 +45,9 @@ char		*ft_utoa(unsigned int u);
 int			von_success(const int i, int (*f)(va_list), va_list args);
 
 int			ft_ulog(const unsigned int base, const unsigned int n);
+
+char		*ft_utox(unsigned int u);
+
+char		*ft_utox_(unsigned int u);
 
 #endif
