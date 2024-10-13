@@ -31,8 +31,8 @@ int	vprint_fmt(const char t, va_list args)
 	else if (t == '%')
 		return ((int)write(STDOUT_FILENO, "%", 1));
 	else if (t == 'p')
-		return (on_success(
-				(int)write(STDOUT_FILENO, "0x", 2), vprint_hex(args)));
+		return (von_success(
+				(int)write(STDOUT_FILENO, "0x", 2), vprint_hex, args));
 	else
 		return (-1);
 }
@@ -60,18 +60,24 @@ int	vprint_int(va_list args)
 {
 	int		x;
 	char	*str;
+	int		res;
 
 	x = va_arg(args, int);
 	str = ft_itoa(x);
-	return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
+	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+	free(str);
+	return (res);
 }
 
 int	vprint_uint(va_list args)
 {
 	unsigned int	x;
 	char			*str;
+	int				res;
 
 	x = va_arg(args, (unsigned int));
 	str = ft_utoa(x);
-	return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
+	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+	free(str);
+	return (res);
 }

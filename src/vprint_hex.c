@@ -18,6 +18,6 @@ int	vprint_hex_big(va_list args);
 
 char	*ft_utoa(unsigned int u);
 
-int	on_success(const int i, const int j);
+int	von_success(const int i, int (*f)(va_list), va_list args);
 
 int	ft_ulog(const unsigned int base, const unsigned int n);
