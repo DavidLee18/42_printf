@@ -30,7 +30,6 @@ int	ft_vprintf(const char *fmt, va_list args)
 	int			arg_idx;
 	int			flag;
 	int			flag2;
-	int			flag3;
 
 	arg_idx = fst_fmt_arg(fmt);
 	if (arg_idx < 0)

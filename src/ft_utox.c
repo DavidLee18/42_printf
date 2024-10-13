@@ -25,7 +25,7 @@ char	*ft_utox(unsigned int u)
 	str = (char *)ft_calloc(dgt_len + 2, sizeof(char));
 	if (!str)
 		return (NULL);
-	str[dgt_len + 1] = NULL;
+	str[dgt_len + 1] = 0;
 	while (dgt_len >= 0)
 	{
 		str[dgt_len--] = "0123456789abcdef"[n % 16];
@@ -47,7 +47,7 @@ char	*ft_utox_(unsigned int u)
 	str = (char *)ft_calloc(dgt_len + 2, sizeof(char));
 	if (!str)
 		return (NULL);
-	str[dgt_len + 1] = NULL;
+	str[dgt_len + 1] = 0;
 	while (dgt_len >= 0)
 	{
 		str[dgt_len--] = "0123456789ABCDEF"[n % 16];

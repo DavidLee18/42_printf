@@ -51,7 +51,7 @@ char	*ft_utoa(unsigned int u)
 	str = (char *)ft_calloc(dgt_len + 2, sizeof(char));
 	if (!str)
 		return (NULL);
-	str[dgt_len + 1] = NULL;
+	str[dgt_len + 1] = 0;
 	while (dgt_len >= 0)
 	{
 		str[dgt_len--] = '0' + (n % 10);

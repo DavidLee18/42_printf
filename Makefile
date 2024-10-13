@@ -1,13 +1,13 @@
 CC := cc
 CFLAGS := -Wall -Werror -Wextra -g
-NAME := libftprintf
+NAME := libftprintf.a
 
 BUILD_DIR := build
 SRC_DIR := src
 
-CS := ft_printf.c vprint_fmt.c vprint_hex.c ft_utox.c
-SRCS := $(SRC_DIR)/$(CS)
-OBJS := $(BUILD_DIR)/$(CS:.c=.o)
+CS := ft_utox.c vprint_hex.c vprint_fmt.c ft_printf.c
+SRCS := $(CS:%=$(SRC_DIR)/%)
+OBJS := $(CS:%.c=$(BUILD_DIR)/%.o)
 
 # BONUS			:=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
 # 					ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
@@ -15,23 +15,27 @@ OBJS := $(BUILD_DIR)/$(CS:.c=.o)
 # BONUS_OBJS		:= $(BONUS:.c=.o)
 
 
-all: $(NAME) libft
+all: $(NAME)
 
-$(NAME): $(OBJS)
-	@ar -rcs $(NAME).a $(OBJS)
+$(NAME): $(OBJS) libft.a
+	@ar -rcs $(NAME) $(OBJS)
 
 $(OBJS): $(SRCS)
 	@mkdir -p $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-libft:
+libft.a:
 	@make -C libft
+	@cp libft/libft.a .
 
 clean:
 	@rm -rf $(BUILD_DIR)
+	@make clean -C libft
 
 fclean:	clean
-	@rm -f $(NAME).a
+	@rm -f $(NAME)
+	@rm -f libft.a
+	@make fclean -C libft
 
 re:	fclean $(NAME)
 
