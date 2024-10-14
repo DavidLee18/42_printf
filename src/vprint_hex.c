@@ -20,6 +20,8 @@ int	vprint_hex(va_list args)
 
 	u = va_arg(args, (unsigned int));
 	str = ft_utox(u);
+	if (!str)
+		return (-1);
 	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
 	free(str);
 	return (res);
@@ -33,6 +35,8 @@ int	vprint_hex_(va_list args)
 
 	u = va_arg(args, (unsigned int));
 	str = ft_utox_(u);
+	if (!str)
+		return (-1);
 	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
 	free(str);
 	return (res);

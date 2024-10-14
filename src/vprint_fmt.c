@@ -64,6 +64,8 @@ int	vprint_int(va_list args)
 
 	x = va_arg(args, int);
 	str = ft_itoa(x);
+	if (!str)
+		return (-1);
 	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
 	free(str);
 	return (res);
@@ -77,6 +79,8 @@ int	vprint_uint(va_list args)
 
 	x = va_arg(args, (unsigned int));
 	str = ft_utoa(x);
+	if (!str)
+		return (-1);
 	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
 	free(str);
 	return (res);
