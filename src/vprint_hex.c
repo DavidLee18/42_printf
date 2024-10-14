@@ -18,7 +18,7 @@ int	vprint_hex(va_list args)
 	char			*str;
 	int				res;
 
-	u = va_arg(args, (unsigned int));
+	u = va_arg(args, unsigned int);
 	str = ft_utox(u);
 	if (!str)
 		return (-1);
@@ -33,7 +33,7 @@ int	vprint_hex_(va_list args)
 	char			*str;
 	int				res;
 
-	u = va_arg(args, (unsigned int));
+	u = va_arg(args, unsigned int);
 	str = ft_utox_(u);
 	if (!str)
 		return (-1);

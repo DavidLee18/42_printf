@@ -41,7 +41,7 @@ int	vprint_chr(va_list args)
 {
 	unsigned char	c;
 
-	c = va_arg(args, (unsigned char));
+	c = va_arg(args, unsigned char);
 	return ((int)write(STDOUT_FILENO, &c, 1));
 }
 
@@ -50,7 +50,7 @@ int	vprint_str(va_list args)
 	char	*str;
 
 	str = NULL;
-	str = va_arg(args, (char *));
+	str = va_arg(args, char *);
 	if (!str)
 		return (-1);
 	return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
@@ -77,7 +77,7 @@ int	vprint_uint(va_list args)
 	char			*str;
 	int				res;
 
-	x = va_arg(args, (unsigned int));
+	x = va_arg(args, unsigned int);
 	str = ft_utoa(x);
 	if (!str)
 		return (-1);

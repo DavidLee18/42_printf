@@ -6,7 +6,7 @@
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:41:54 by jaehylee          #+#    #+#             */
-/*   Updated: 2024/10/12 03:41:54 by jaehylee         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:57:10 by jaehylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			ft_vprintf(const char *fmt, va_list args);
 
 int			fst_fmt_arg(const char *fmt);
 
-int			is_fmt_arg(const char *cs);
+int			is_fmt_arg(const char *str);
 
 int			vprint_fmt(const char t, va_list args);
 
