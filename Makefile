@@ -5,7 +5,7 @@ NAME := libftprintf.a
 BUILD_DIR := build
 SRC_DIR := src
 
-CS := ft_printf.c ft_utox.c vprint_hex.c vprint_fmt.c
+CS := ft_printf.c vprint_fmt.c ft_utox.c vprint_hex.c
 SRCS := $(CS:%=$(SRC_DIR)/%)
 OBJS := $(CS:%.c=$(BUILD_DIR)/%.o)
 
@@ -23,6 +23,8 @@ $(NAME): $(OBJS) libft.a
 $(OBJS): $(SRCS)
 	@mkdir -p $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(SRCS): libft/libft.h $(SRC_DIR)/ft_printf.h
 
 libft.a:
 	@make -C libft
