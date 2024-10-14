@@ -5,7 +5,7 @@ NAME := libftprintf.a
 BUILD_DIR := build
 SRC_DIR := src
 
-CS := ft_printf.c vprint_fmt.c ft_utox.c vprint_hex.c
+CS := ft_printf.c vprint_fmt.c ft_utox.c vprint_hex.c is_conv_spec.c
 SRCS := $(CS:%=$(SRC_DIR)/%)
 OBJS := $(CS:%.c=$(BUILD_DIR)/%.o)
 
@@ -21,8 +21,8 @@ $(NAME): $(OBJS) libft.a
 	@ar -rcs $(NAME) $(OBJS)
 
 $(OBJS): $(SRCS)
-	@mkdir -p $(BUILD_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(SRCS): libft/libft.h $(SRC_DIR)/ft_printf.h
 
@@ -31,13 +31,13 @@ libft.a:
 	@cp libft/libft.a .
 
 clean:
-	@rm -rf $(BUILD_DIR)
-	@make clean -C libft
+	rm -rf $(BUILD_DIR)
+	make clean -C libft
 
 fclean:	clean
-	@rm -f $(NAME)
-	@rm -f libft.a
-	@make fclean -C libft
+	rm -f $(NAME)
+	rm -f libft.a
+	make fclean -C libft
 
 re:	fclean $(NAME)
 

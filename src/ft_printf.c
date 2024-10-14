@@ -27,46 +27,41 @@ int	ft_printf(const char *fmt, ...)
 
 int	ft_vprintf(const char *fmt, va_list args)
 {
-	int			arg_idx;
+	t_fmt_arg	*arg;
 	int			flag;
 	int			flag2;
 
-	arg_idx = fst_fmt_arg(fmt);
-	if (arg_idx < 0)
+	arg = fst_fmt_arg(fmt);
+	if (!arg)
 		return ((int)write(STDOUT_FILENO, fmt, ft_strlen(fmt)));
-	flag = (int)write(STDOUT_FILENO, fmt, arg_idx);
+	flag = (int)write(STDOUT_FILENO, fmt, arg->start);
 	if (flag < 0)
 		return (flag);
-	flag2 = vprint_fmt(fmt[arg_idx + 1], args);
+	flag2 = vprint_fmt(arg, args);
 	if (flag2 < 0)
 		return (flag2);
-	if (fmt[arg_idx + 2])
-		return (sum_or_error(flag, flag2, ft_vprintf(fmt + arg_idx + 2, args)));
+	if (fmt[arg->end + 1])
+		return (sum_or_error(flag, flag2, ft_vprintf(fmt + arg->end + 1, args)));
 	else
 		return (flag + flag2);
 }
 
-int	is_fmt_arg(const char *str)
-{
-	return (str[0] == '%' && (str[1] == 'c' || str[1] == 's'
-			|| str[1] == 'p' || str[1] == 'd' || str[1] == 'i'
-			|| str[1] == 'u' || str[1] == 'x' || str[1] == 'X'
-			|| str[1] == '%'));
-}
-
-int	fst_fmt_arg(const char *fmt)
+t_fmt_arg	*fst_fmt_arg(const char *fmt)
 {
 	int			i;
+	t_fmt_arg	*res;
 
 	if (!fmt)
-		return (-1);
-	i = -1;
-	while (fmt[++i])
-	{
-		if (is_fmt_arg(fmt + i))
-			return (i);
-	}
-	return (-1);
+		return (NULL);
+	i = 0;
+	while (fmt[i] && fmt[i] != '%')
+		i++;
+	res = (t_fmt_arg *)ft_calloc(1, sizeof(t_fmt_arg));
+	if (!res)
+		return (NULL);
+	res->start = i;
+	// ...
+	return (res);
 }
 
 int	sum_or_error(const int i, const int j, const int k)

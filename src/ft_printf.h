@@ -16,17 +16,27 @@
 # include <stdarg.h>
 # include "../libft/libft.h"
 
+typedef struct s_fmt_arg
+{
+	int		start;
+	char	*flags;
+	int		*min_width;
+	int		*prec;
+	char	conv_spec;
+	int		end;
+}	t_fmt_arg;
+
 int			ft_printf(const char *fmt, ...);
 
 int			ft_vprintf(const char *fmt, va_list args);
 
-int			fst_fmt_arg(const char *fmt);
+t_fmt_arg	*fst_fmt_arg(const char *fmt);
 
 int			is_fmt_arg(const char *str);
 
-int			vprint_fmt(const char t, va_list args);
+int			vprint_fmt(const t_fmt_arg farg, va_list args);
 
-int			sum_or_error(const	int i, const int j, const int k);
+int			sum_or_error(const int i, const int j, const int k);
 
 int			vprint_chr(va_list args);
 
@@ -49,5 +59,7 @@ int			ft_ulog(const unsigned int base, const unsigned int n);
 char		*ft_utox(unsigned int u);
 
 char		*ft_utox_(unsigned int u);
+
+int			is_conv_spec(const char c);
 
 #endif
