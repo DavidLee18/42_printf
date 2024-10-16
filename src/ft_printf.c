@@ -53,8 +53,6 @@ t_fmt_arg	*fst_fmt_arg(const char *fmt)
 	t_fmt_arg	*res;
 	_Bool		j;
 
-	if (!fmt)
-		return (NULL);
 	i = 0;
 	while (fmt[i] && fmt[i] != '%')
 		i++;
@@ -67,7 +65,8 @@ t_fmt_arg	*fst_fmt_arg(const char *fmt)
 	preproc_flags(fmt, res, &i);
 	parse_width(fmt, res, &i);
 	parse_prec(fmt, res, &i);
-	j = parse_conv_spec(fmt, res, i);
+	j = parse_conv_spec(fmt, res, &i);
+	res->end = i;
 	if (j == 1)
 		return (res);
 	free_fmt_arg(res);
