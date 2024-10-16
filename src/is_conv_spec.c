@@ -49,7 +49,7 @@ void	parse_width(const char *fmt, t_fmt_arg *arg, size_t *i)
 	if (fmt[*i] < '1' || fmt[*i] > '9')
 		return ;
 	j = *i;
-	while (fmt[*i] >= '1' && fmt[*i] <= '9')
+	while (ft_isdigit(fmt[*i]))
 		(*i)++;
 	sub_str = ft_substr(fmt, j, *i - j + 1);
 	if (sub_str == NULL)

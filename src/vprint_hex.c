@@ -64,13 +64,6 @@ char	*ft_utoa(unsigned int u)
 	return (str);
 }
 
-int	von_success(const int i, int (*f)(va_list), va_list args)
-{
-	if (i < 0)
-		return (i);
-	return (i + (*f)(args));
-}
-
 int	ft_ulog(const size_t base, const size_t n)
 {
 	if (base == 0 || base == 1 || n == 0)
@@ -78,4 +71,14 @@ int	ft_ulog(const size_t base, const size_t n)
 	else if (n < base)
 		return (0);
 	return (1 + ft_ulog(base, n / base));
+}
+
+int	vprint_p(t_fmt_arg *farg, va_list args)
+{
+	if (!(farg->flags))
+		farg->flags = init_flags();
+	if (!(farg->flags))
+		return (-1);
+	farg->flags->alt_form = 1;
+	return (vprint_hex(farg, args));
 }

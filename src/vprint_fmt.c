@@ -12,37 +12,47 @@
 
 #include "ft_printf.h"
 
-int	vprint_fmt(const t_fmt_arg farg, va_list args)
+int	vprint_fmt(t_fmt_arg *farg, va_list args)
 {
-	int	res1;
-
-	if (farg.conv_spec == 'c')
-		return (vprint_chr(args));
-	else if (farg.conv_spec == 's')
-		return (vprint_str(args));
-	else if (farg.conv_spec == 'x')
-		return (vprint_hex(args));
-	else if (farg.conv_spec == 'X')
-		return (vprint_hex_(args));
-	else if (farg.conv_spec == 'i' || farg.conv_spec == 'd')
-		return (vprint_int(args));
-	else if (farg.conv_spec == 'u')
-		return (vprint_uint(args));
-	else if (farg.conv_spec == '%')
-		return ((int)write(STDOUT_FILENO, "%", 1));
-	else if (farg.conv_spec == 'p')
-		return (von_success(
-				(int)write(STDOUT_FILENO, "0x", 2), vprint_hex, args));
+	if (farg->conv_spec == 'c')
+		return (vprint_chr(farg, args));
+	else if (farg->conv_spec == 's')
+		return (vprint_str(farg, args));
+	else if (farg->conv_spec == 'x')
+		return (vprint_hex(farg, args));
+	else if (farg->conv_spec == 'X')
+		return (vprint_hex_(farg, args));
+	else if (farg->conv_spec == 'i' || farg->conv_spec == 'd')
+		return (vprint_int(farg, args));
+	else if (farg->conv_spec == 'u')
+		return (vprint_uint(farg, args));
+	else if (farg->conv_spec == '%')
+		return (vprint_per(farg, args));
+	else if (farg->conv_spec == 'p')
+		return (vprint_p(farg, args));
 	else
 		return (-1);
 }
 
-int	vprint_chr(va_list args)
+int	vprint_chr(const t_fmt_arg *farg, va_list args)
 {
 	unsigned char	c;
+	int				i;
+	int				j;
 
 	c = va_arg(args, unsigned char);
-	return ((int)write(STDOUT_FILENO, &c, 1));
+	j = 0;
+	if (farg->flags && farg->min_width && *(farg->min_width) > 1)
+	{
+		i = -1;
+		if (farg->flags->adjust_left)
+			j = (int)write(STDOUT_FILENO, &c, 1);
+		while (++i < *(farg->min_width) && j >= 0)
+			j = (int)write(STDOUT_FILENO, " ", 1);
+		if (!farg->flags->adjust_left)
+			j = (int)write(STDOUT_FILENO, &c, 1);
+	}
+	return (j);
 }
 
 int	vprint_str(va_list args)

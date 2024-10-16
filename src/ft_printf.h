@@ -41,25 +41,23 @@ int			ft_vprintf(const char *fmt, va_list args);
 
 t_fmt_arg	*fst_fmt_arg(const char *fmt);
 
-int			vprint_fmt(const t_fmt_arg farg, va_list args);
+int			vprint_fmt(t_fmt_arg *farg, va_list args);
 
 int			sum_or_error(const int i, const int j, const int k);
 
-int			vprint_chr(va_list args);
+int			vprint_chr(const t_fmt_arg *farg, va_list args);
 
-int			vprint_str(va_list args);
+int			vprint_str(const t_fmt_arg *farg, va_list args);
 
-int			vprint_hex(va_list args);
+int			vprint_hex(const t_fmt_arg *farg, va_list args);
 
-int			vprint_hex_(va_list args);
+int			vprint_hex_(const t_fmt_arg *farg, va_list args);
 
-int			vprint_int(va_list args);
+int			vprint_int(const t_fmt_arg *farg, va_list args);
 
-int			vprint_uint(va_list args);
+int			vprint_uint(const t_fmt_arg *farg, va_list args);
 
 char		*ft_utoa(unsigned int u);
-
-int			von_success(const int i, int (*f)(va_list), va_list args);
 
 int			ft_ulog(const size_t base, const size_t n);
 
@@ -88,5 +86,9 @@ t_fmt_arg	*init_fmt_arg(void);
 void		free_fmt_arg(t_fmt_arg *arg);
 
 t_flags		*init_flags(void);
+
+int			vprint_per(const t_fmt_arg *farg, va_list args);
+
+int			vprint_p(t_fmt_arg *farg, va_list args);
 
 #endif
