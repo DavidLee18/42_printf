@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void		free_fmt_arg(t_fmt_arg *arg)
+void	free_fmt_arg(t_fmt_arg *arg)
 {
 	if (!arg)
 		return ;
@@ -25,7 +25,7 @@ void		free_fmt_arg(t_fmt_arg *arg)
 	free(arg);
 }
 
-t_flags		*init_flags(void)
+t_flags	*init_flags(void)
 {
 	t_flags	*f;
 

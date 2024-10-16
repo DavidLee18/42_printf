@@ -56,7 +56,7 @@ void	parse_width(const char *fmt, t_fmt_arg *arg, size_t *i)
 		return ;
 	arg->min_width = (size_t *)ft_calloc(1, sizeof(size_t));
 	if (arg->min_width == NULL)
-		return;
+		return ;
 	*(arg->min_width) = ft_atoul(sub_str);
 }
 
@@ -81,7 +81,7 @@ void	parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i)
 		l = 0;
 	arg->prec = (size_t *)ft_calloc(1, sizeof(size_t));
 	if (arg->prec == NULL)
-		return;
+		return ;
 	*(arg->prec) = l;
 }
 
