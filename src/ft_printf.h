@@ -16,14 +16,23 @@
 # include <stdarg.h>
 # include "../libft/libft.h"
 
+typedef struct s_flags
+{
+	_Bool	alt_form;
+	_Bool	pad_zero;
+	_Bool	adjust_left;
+	_Bool	blank;
+	_Bool	sign;
+}	t_flags;
+
 typedef struct s_fmt_arg
 {
-	int		start;
-	char	*flags;
-	int		*min_width;
-	int		*prec;
+	size_t	start;
+	t_flags	*flags;
+	size_t	*min_width;
+	size_t	*prec;
 	char	conv_spec;
-	int		end;
+	size_t	end;
 }	t_fmt_arg;
 
 int			ft_printf(const char *fmt, ...);
@@ -31,8 +40,6 @@ int			ft_printf(const char *fmt, ...);
 int			ft_vprintf(const char *fmt, va_list args);
 
 t_fmt_arg	*fst_fmt_arg(const char *fmt);
-
-int			is_fmt_arg(const char *str);
 
 int			vprint_fmt(const t_fmt_arg farg, va_list args);
 
@@ -54,12 +61,16 @@ char		*ft_utoa(unsigned int u);
 
 int			von_success(const int i, int (*f)(va_list), va_list args);
 
-int			ft_ulog(const unsigned int base, const unsigned int n);
+int			ft_ulog(const size_t base, const size_t n);
 
 char		*ft_utox(unsigned int u);
 
 char		*ft_utox_(unsigned int u);
 
-int			is_conv_spec(const char c);
+_Bool		is_conv_spec(const char c);
+
+void		preproc_flags(const char *fmt, t_fmt_arg *arg, size_t *i);
+
+int			free_and_return(t_fmt_arg *arg, const int i);
 
 #endif

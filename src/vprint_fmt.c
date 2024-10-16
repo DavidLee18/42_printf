@@ -12,25 +12,25 @@
 
 #include "ft_printf.h"
 
-int	vprint_fmt(const char t, va_list args)
+int	vprint_fmt(const t_fmt_arg farg, va_list args)
 {
 	int	res1;
 
-	if (t == 'c')
+	if (farg.conv_spec == 'c')
 		return (vprint_chr(args));
-	else if (t == 's')
+	else if (farg.conv_spec == 's')
 		return (vprint_str(args));
-	else if (t == 'x')
+	else if (farg.conv_spec == 'x')
 		return (vprint_hex(args));
-	else if (t == 'X')
+	else if (farg.conv_spec == 'X')
 		return (vprint_hex_(args));
-	else if (t == 'i' || t == 'd')
+	else if (farg.conv_spec == 'i' || farg.conv_spec == 'd')
 		return (vprint_int(args));
-	else if (t == 'u')
+	else if (farg.conv_spec == 'u')
 		return (vprint_uint(args));
-	else if (t == '%')
+	else if (farg.conv_spec == '%')
 		return ((int)write(STDOUT_FILENO, "%", 1));
-	else if (t == 'p')
+	else if (farg.conv_spec == 'p')
 		return (von_success(
 				(int)write(STDOUT_FILENO, "0x", 2), vprint_hex, args));
 	else

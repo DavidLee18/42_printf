@@ -36,19 +36,20 @@ int	ft_vprintf(const char *fmt, va_list args)
 		return ((int)write(STDOUT_FILENO, fmt, ft_strlen(fmt)));
 	flag = (int)write(STDOUT_FILENO, fmt, arg->start);
 	if (flag < 0)
-		return (flag);
-	flag2 = vprint_fmt(arg, args);
+		return (free_and_return(arg, flag));
+	flag2 = vprint_fmt(*arg, args);
 	if (flag2 < 0)
-		return (flag2);
+		return (free_and_return(arg, flag2));
 	if (fmt[arg->end + 1])
-		return (sum_or_error(flag, flag2, ft_vprintf(fmt + arg->end + 1, args)));
+		return (free_and_return(arg, sum_or_error(flag, flag2,
+				ft_vprintf(fmt + arg->end + 1, args))));
 	else
-		return (flag + flag2);
+		return (free_and_return(arg, flag + flag2));
 }
 
 t_fmt_arg	*fst_fmt_arg(const char *fmt)
 {
-	int			i;
+	size_t		i;
 	t_fmt_arg	*res;
 
 	if (!fmt)
@@ -56,10 +57,13 @@ t_fmt_arg	*fst_fmt_arg(const char *fmt)
 	i = 0;
 	while (fmt[i] && fmt[i] != '%')
 		i++;
+	if (!fmt[i])
+		return (NULL);
 	res = (t_fmt_arg *)ft_calloc(1, sizeof(t_fmt_arg));
 	if (!res)
 		return (NULL);
-	res->start = i;
+	res->start = i++;
+	preproc_flags(fmt, res, &i);
 	// ...
 	return (res);
 }

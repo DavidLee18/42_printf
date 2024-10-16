@@ -71,7 +71,7 @@ int	von_success(const int i, int (*f)(va_list), va_list args)
 	return (i + (*f)(args));
 }
 
-int	ft_ulog(const unsigned int base, const unsigned int n)
+int	ft_ulog(const size_t base, const size_t n)
 {
 	if (base == 0 || base == 1 || n == 0)
 		return (-1);

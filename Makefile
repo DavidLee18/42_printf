@@ -1,13 +1,13 @@
 CC := cc
-CFLAGS := -Wall -Werror -Wextra -g
+CFLAGS := -Wall -Werror -Wextra
 NAME := libftprintf.a
 
 BUILD_DIR := build
 SRC_DIR := src
 
-CS := ft_printf.c vprint_fmt.c ft_utox.c vprint_hex.c is_conv_spec.c
-SRCS := $(CS:%=$(SRC_DIR)/%)
-OBJS := $(CS:%.c=$(BUILD_DIR)/%.o)
+SRCS := src/ft_printf.c src/vprint_fmt.c src/ft_utox.c src/vprint_hex.c \
+		src/is_conv_spec.c
+OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 # BONUS			:=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
 # 					ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
