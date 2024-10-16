@@ -22,6 +22,9 @@ _Bool	is_conv_spec(const char c)
 
 void	preproc_flags(const char *fmt, t_fmt_arg *arg, size_t *i)
 {
+	if (!(fmt[*i] == '#' || fmt[*i] == '0' || fmt[*i] == '-'
+			|| fmt[*i] == ' ' || fmt[*i] == '+'))
+		return ;
 	arg->flags = (t_flags *)ft_calloc(1, sizeof(t_flags));
 	if (arg->flags == NULL)
 		return ;
@@ -41,4 +44,42 @@ void	preproc_flags(const char *fmt, t_fmt_arg *arg, size_t *i)
 		(*i)++;
 	}
 	return ;
+}
+
+void	parse_width(const char *fmt, t_fmt_arg *arg, size_t *i)
+{
+	size_t	j;
+	char	*sub_str;
+
+	if (fmt[*i] < '1' || fmt[*i] > '9')
+		return ;
+	j = *i;
+	while (fmt[*i] >= '1' && fmt[*i] <= '9')
+		(*i)++;
+	sub_str = ft_substr(fmt, j, *i - j + 1);
+	if (sub_str == NULL)
+		return ;
+	arg->min_width = ft_atoul(sub_str);
+}
+
+void	parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i)
+{
+	size_t	j;
+	char	*sub_str;
+	long	l;
+
+	if (ft_isdigit(fmt[*i]) && fmt[*i] != '-')
+		return ;
+	j = *i;
+	if (fmt[*i] == '-')
+		(*i)++;
+	while (fmt[*i] >= '0' && fmt[*i] <= '9')
+		(*i)++;
+	sub_str = ft_substr(fmt, j, *i - j + 1);
+	if (sub_str == NULL)
+		return ;
+	l = ft_atol(sub_str);
+	if (l < 0)
+		l = 0;
+	*(arg->prec) = l;
 }

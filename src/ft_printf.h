@@ -73,4 +73,18 @@ void		preproc_flags(const char *fmt, t_fmt_arg *arg, size_t *i);
 
 int			free_and_return(t_fmt_arg *arg, const int i);
 
+void		parse_width(const char *fmt, t_fmt_arg *arg, size_t *i);
+
+void		parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i);
+
+_Bool		parse_conv_spec(const char *fmt, t_fmt_arg *arg, const size_t i);
+
+size_t		ft_atoul(const char *str);
+
+long		ft_atol(const char *str);
+
+t_fmt_arg	*init_fmt_arg(void);
+
+void		free_fmt_arg(t_fmt_arg *arg);
+
 #endif
