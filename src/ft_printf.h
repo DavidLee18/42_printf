@@ -91,4 +91,6 @@ int			vprint_per(const t_fmt_arg *farg, va_list args);
 
 int			vprint_p(t_fmt_arg *farg, va_list args);
 
+int			vprint_str_flags(const t_fmt_arg *farg, const char *str);
+
 #endif

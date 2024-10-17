@@ -59,23 +59,14 @@ int	vprint_chr(const t_fmt_arg *farg, va_list args)
 int	vprint_str(const t_fmt_arg *farg, va_list args)
 {
 	char	*str;
-	size_t	len;
 
 	str = NULL;
 	str = va_arg(args, char *);
 	if (!str)
 		return (-1);
-	len = ft_strlen(str);
 	if (farg->flags)
-	{
-		if (farg->flags->adjust_left)
-		{
-		}
-		else
-		{
-		}
-	}
-	return ((int)write(STDOUT_FILENO, str, len));
+		return (vprint_str_flags(farg, str));
+	return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
 }
 
 int	vprint_int(va_list args)

@@ -44,6 +44,7 @@ void	preproc_flags(const char *fmt, t_fmt_arg *arg, size_t *i)
 void	parse_width(const char *fmt, t_fmt_arg *arg, size_t *i)
 {
 	size_t	j;
+	size_t	k;
 	char	*sub_str;
 
 	if (fmt[*i] < '1' || fmt[*i] > '9')
@@ -54,31 +55,32 @@ void	parse_width(const char *fmt, t_fmt_arg *arg, size_t *i)
 	sub_str = ft_substr(fmt, j, *i - j + 1);
 	if (sub_str == NULL)
 		return ;
+	k = ft_atoul(sub_str);
 	arg->min_width = (size_t *)ft_calloc(1, sizeof(size_t));
+	free(sub_str);
 	if (arg->min_width == NULL)
 		return ;
-	*(arg->min_width) = ft_atoul(sub_str);
+	*(arg->min_width) = k;
 }
 
 void	parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i)
 {
 	size_t	j;
 	char	*sub_str;
-	long	l;
+	size_t	l;
 
 	if (fmt[*i] != '.' && ft_isdigit(fmt[*i + 1]) && fmt[*i + 1] != '-')
 		return ;
 	j = ++(*i);
 	if (fmt[*i] == '-')
-		(*i)++;
+		return ;
 	while (fmt[*i] >= '0' && fmt[*i] <= '9')
 		(*i)++;
 	sub_str = ft_substr(fmt, j, *i - j + 1);
 	if (sub_str == NULL)
 		return ;
-	l = ft_atol(sub_str);
-	if (l < 0)
-		l = 0;
+	l = ft_atoul(sub_str);
+	free(sub_str);
 	arg->prec = (size_t *)ft_calloc(1, sizeof(size_t));
 	if (arg->prec == NULL)
 		return ;
