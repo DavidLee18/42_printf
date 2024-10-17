@@ -59,17 +59,23 @@ int	vprint_chr(const t_fmt_arg *farg, va_list args)
 int	vprint_str(const t_fmt_arg *farg, va_list args)
 {
 	char	*str;
+	char	*temp;
+	int		i;
 
 	str = NULL;
 	str = va_arg(args, char *);
 	if (!str)
 		return (-1);
-	if (farg->flags)
-		return (vprint_str_flags(farg, str));
-	return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
+	if (farg->prec && *(farg->prec) < ft_strlen(str))
+		temp = ft_substr(str, 0, *(farg->prec));
+	else
+		temp = ft_strdup(str);
+	i = (vprint_str_flags(farg, temp));
+	free(temp);
+	return (i);
 }
 
-int	vprint_int(va_list args)
+int	vprint_int(const t_fmt_arg *farg, va_list args)
 {
 	int		x;
 	char	*str;

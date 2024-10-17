@@ -63,24 +63,20 @@ int	vprint_per(const t_fmt_arg *farg, va_list args)
 int	vprint_str_flags(const t_fmt_arg *farg, const char *str)
 {
 	int		i;
-	char	*temp;
 	int		j;
 
 	i = -1;
-	if (farg->prec && *(farg->prec) < ft_strlen(str))
-		temp = ft_substr(str, 0, *(farg->prec));
-	else
-		temp = ft_strdup(str);
-	if (farg->min_width && *(farg->min_width) > ft_strlen(temp))
+	if (farg->min_width && *(farg->min_width) > ft_strlen(str))
 	{
-		if (farg->flags->adjust_left && ft_strlen(temp) > 0)
-			j = (int)write(STDOUT_FILENO, temp, ft_strlen(temp));
-		while (j > 0 && ++i < *(farg->min_width) - ft_strlen(temp))
+		if (farg->flags && farg->flags->adjust_left && ft_strlen(str) > 0)
+			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+		while (j > 0 && ++i < *(farg->min_width) - ft_strlen(str))
 			j = (int)write(STDOUT_FILENO, " ", 1);
-		if (j > 0 && !farg->flags->adjust_left && ft_strlen(temp) > 0)
-			j = (int)write(STDOUT_FILENO, temp, ft_strlen(temp));
+		if (j > 0 && !(farg->flags && farg->flags->adjust_left)
+			&& ft_strlen(str) > 0)
+			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
 		return (j);
 	}
 	else
-		return ((int)write(STDOUT_FILENO, temp, ft_strlen(temp)));
+		return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
 }
