@@ -87,10 +87,18 @@ void		free_fmt_arg(t_fmt_arg *arg);
 
 t_flags		*init_flags(void);
 
-int			vprint_per(const t_fmt_arg *farg, va_list args);
+int			print_per(const t_fmt_arg *farg, va_list args);
 
-int			vprint_p(t_fmt_arg *farg, va_list args);
+int			printp(t_fmt_arg *farg, va_list args);
 
-int			vprint_str_flags(const t_fmt_arg *farg, const char *str);
+int			sprint_f(const t_fmt_arg *farg, const char *str);
+
+int			uprintf(const t_fmt_arg *farg, const char *num);
+
+int			uprint_pad(const size_t len);
+
+int			uprintf2(const t_fmt_arg *farg, const char *num);
+
+int			uprint_padz(const size_t len, const char *num);
 
 #endif

@@ -27,9 +27,9 @@ int	vprint_fmt(t_fmt_arg *farg, va_list args)
 	else if (farg->conv_spec == 'u')
 		return (vprint_uint(farg, args));
 	else if (farg->conv_spec == '%')
-		return (vprint_per(farg, args));
+		return (print_per(farg, args));
 	else if (farg->conv_spec == 'p')
-		return (vprint_p(farg, args));
+		return (printp(farg, args));
 	else
 		return (-1);
 }
@@ -70,7 +70,7 @@ int	vprint_str(const t_fmt_arg *farg, va_list args)
 		temp = ft_substr(str, 0, *(farg->prec));
 	else
 		temp = ft_strdup(str);
-	i = (vprint_str_flags(farg, temp));
+	i = sprint_f(farg, temp);
 	free(temp);
 	return (i);
 }
@@ -90,7 +90,7 @@ int	vprint_int(const t_fmt_arg *farg, va_list args)
 	return (res);
 }
 
-int	vprint_uint(va_list args)
+int	vprint_uint(const t_fmt_arg *farg, va_list args)
 {
 	unsigned int	x;
 	char			*str;
@@ -100,7 +100,7 @@ int	vprint_uint(va_list args)
 	str = ft_utoa(x);
 	if (!str)
 		return (-1);
-	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+	res = uprintf(farg, str);
 	free(str);
 	return (res);
 }

@@ -40,7 +40,7 @@ t_flags	*init_flags(void)
 	return (f);
 }
 
-int	vprint_per(const t_fmt_arg *farg, va_list args)
+int	print_per(const t_fmt_arg *farg, va_list args)
 {
 	int	i;
 	int	j;
@@ -60,17 +60,18 @@ int	vprint_per(const t_fmt_arg *farg, va_list args)
 		return ((int)write(STDOUT_FILENO, "%", 1));
 }
 
-int	vprint_str_flags(const t_fmt_arg *farg, const char *str)
+int	sprint_f(const t_fmt_arg *farg, const char *str)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = -1;
 	if (farg->min_width && *(farg->min_width) > ft_strlen(str))
 	{
 		if (farg->flags && farg->flags->adjust_left && ft_strlen(str) > 0)
 			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
-		while (j > 0 && ++i < *(farg->min_width) - ft_strlen(str))
+		while (j > 0 && *(farg->min_width) > ft_strlen(str)
+			&& ++i < *(farg->min_width) - ft_strlen(str))
 			j = (int)write(STDOUT_FILENO, " ", 1);
 		if (j > 0 && !(farg->flags && farg->flags->adjust_left)
 			&& ft_strlen(str) > 0)
@@ -79,4 +80,27 @@ int	vprint_str_flags(const t_fmt_arg *farg, const char *str)
 	}
 	else
 		return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
+}
+
+int	uprintf(const t_fmt_arg *farg, const char *num)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	if (farg->prec)
+	{
+		if (!(farg->flags && farg->flags->adjust_left)
+			&& farg->min_width && *(farg->min_width) > *(farg->prec))
+			j = uprint_pad(*(farg->min_width) - *(farg->prec));
+		if (j >= 0 && *(farg->prec) > ft_strlen(num))
+			j = uprint_padz(*(farg->prec) - ft_strlen(num), num);
+		if (farg->flags && farg->flags->adjust_left
+			&& farg->min_width && *(farg->min_width) > *(farg->prec))
+			j = uprint_pad(*(farg->min_width) - *(farg->prec));
+		return (j);
+	}
+	else
+		return (uprintf2(farg, num));
 }

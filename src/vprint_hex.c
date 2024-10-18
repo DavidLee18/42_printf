@@ -73,7 +73,7 @@ int	ft_ulog(const size_t base, const size_t n)
 	return (1 + ft_ulog(base, n / base));
 }
 
-int	vprint_p(t_fmt_arg *farg, va_list args)
+int	printp(t_fmt_arg *farg, va_list args)
 {
 	if (!(farg->flags))
 		farg->flags = init_flags();

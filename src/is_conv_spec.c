@@ -69,17 +69,19 @@ void	parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i)
 	char	*sub_str;
 	size_t	l;
 
-	if (fmt[*i] != '.' && ft_isdigit(fmt[*i + 1]) && fmt[*i + 1] != '-')
+	if (fmt[*i] != '.')
 		return ;
 	j = ++(*i);
 	if (fmt[*i] == '-')
 		return ;
 	while (fmt[*i] >= '0' && fmt[*i] <= '9')
 		(*i)++;
-	sub_str = ft_substr(fmt, j, *i - j + 1);
+	sub_str = ft_substr(fmt, j, *i - j);
 	if (sub_str == NULL)
 		return ;
-	l = ft_atoul(sub_str);
+	l = 0;
+	if (ft_strlen(sub_str) != 0)
+		l = ft_atoul(sub_str);
 	free(sub_str);
 	arg->prec = (size_t *)ft_calloc(1, sizeof(size_t));
 	if (arg->prec == NULL)
