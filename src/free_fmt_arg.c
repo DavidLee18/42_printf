@@ -84,10 +84,8 @@ int	sprint_f(const t_fmt_arg *farg, const char *str)
 
 int	uprintf(const t_fmt_arg *farg, const char *num)
 {
-	int	i;
 	int	j;
 
-	i = -1;
 	j = 0;
 	if (farg->prec)
 	{

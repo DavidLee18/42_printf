@@ -18,10 +18,8 @@ int	vprint_fmt(t_fmt_arg *farg, va_list args)
 		return (vprint_chr(farg, args));
 	else if (farg->conv_spec == 's')
 		return (vprint_str(farg, args));
-	else if (farg->conv_spec == 'x')
+	else if (farg->conv_spec == 'x' || farg->conv_spec == 'X')
 		return (vprint_hex(farg, args));
-	else if (farg->conv_spec == 'X')
-		return (vprint_hex_(farg, args));
 	else if (farg->conv_spec == 'i' || farg->conv_spec == 'd')
 		return (vprint_int(farg, args));
 	else if (farg->conv_spec == 'u')

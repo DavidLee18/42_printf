@@ -12,32 +12,20 @@
 
 #include "ft_printf.h"
 
-int	vprint_hex(va_list args)
+int	vprint_hex(const t_fmt_arg *farg, va_list args)
 {
 	unsigned int	u;
 	char			*str;
 	int				res;
 
 	u = va_arg(args, unsigned int);
-	str = ft_utox(u);
+	if (farg->conv_spec == 'x')
+		str = ft_utox(u);
+	else
+		str = ft_utox_(u);
 	if (!str)
 		return (-1);
-	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
-	free(str);
-	return (res);
-}
-
-int	vprint_hex_(va_list args)
-{
-	unsigned int	u;
-	char			*str;
-	int				res;
-
-	u = va_arg(args, unsigned int);
-	str = ft_utox_(u);
-	if (!str)
-		return (-1);
-	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+	res = xprintf(farg, str);
 	free(str);
 	return (res);
 }

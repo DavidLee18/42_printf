@@ -51,8 +51,6 @@ int			vprint_str(const t_fmt_arg *farg, va_list args);
 
 int			vprint_hex(const t_fmt_arg *farg, va_list args);
 
-int			vprint_hex_(const t_fmt_arg *farg, va_list args);
-
 int			vprint_int(const t_fmt_arg *farg, va_list args);
 
 int			vprint_uint(const t_fmt_arg *farg, va_list args);
@@ -100,5 +98,9 @@ int			uprint_pad(const size_t len);
 int			uprintf2(const t_fmt_arg *farg, const char *num);
 
 int			uprint_padz(const size_t len, const char *num);
+
+int			xprintf(const t_fmt_arg *farg, const char *num);
+
+int			xprintf2(const t_fmt_arg *farg, const char *num);
 
 #endif
