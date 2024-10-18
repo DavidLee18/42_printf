@@ -73,7 +73,7 @@ void		parse_width(const char *fmt, t_fmt_arg *arg, size_t *i);
 
 void		parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i);
 
-_Bool		parse_conv_spec(const char *fmt, t_fmt_arg *arg, size_t *i);
+_Bool		parse_conv_spec(const char *fmt, t_fmt_arg *arg, const size_t i);
 
 size_t		ft_atoul(const char *str);
 
@@ -102,5 +102,11 @@ int			uprint_padz(const size_t len, const char *num);
 int			xprintf(const t_fmt_arg *farg, const char *num);
 
 int			xprintf2(const t_fmt_arg *farg, const char *num);
+
+int			iprintf(const t_fmt_arg *farg, const char *num);
+
+int			iprints_(const t_fmt_arg *farg, const int j, const char *num);
+
+int			iprint_padz(const size_t len, const char *num);
 
 #endif

@@ -70,3 +70,25 @@ int	printp(t_fmt_arg *farg, va_list args)
 	farg->flags->alt_form = 1;
 	return (vprint_hex(farg, args));
 }
+
+int	iprintf(const t_fmt_arg *farg, const char *num)
+{
+	int	j;
+
+	j = 0;
+	if (farg->prec && farg->flags && (farg->flags->sign || farg->flags->blank))
+	{
+		if (!farg->flags->adjust_left
+			&& farg->min_width && *(farg->min_width) > *(farg->prec) + 1)
+			j = uprint_pad(*(farg->min_width) - *(farg->prec) - 1);
+		j = iprints_(farg, j, num);
+		if (j >= 0 && *(farg->prec) > ft_strlen(num))
+			j = iprint_padz(*(farg->prec) - ft_strlen(num), num);
+		if (farg->flags->adjust_left
+			&& farg->min_width && *(farg->min_width) > *(farg->prec) + 1)
+			j = uprint_pad(*(farg->min_width) - *(farg->prec) - 1);
+		return (j);
+	}
+	else
+		return (uprintf(farg, num));
+}

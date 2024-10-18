@@ -83,7 +83,7 @@ int	vprint_int(const t_fmt_arg *farg, va_list args)
 	str = ft_itoa(x);
 	if (!str)
 		return (-1);
-	res = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+	res = iprintf(farg, str);
 	free(str);
 	return (res);
 }

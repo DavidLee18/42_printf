@@ -37,7 +37,7 @@ int	ft_vprintf(const char *fmt, va_list args)
 	flag = (int)write(STDOUT_FILENO, fmt, arg->start);
 	if (flag < 0)
 		return (free_and_return(arg, flag));
-	flag2 = vprint_fmt(*arg, args);
+	flag2 = vprint_fmt(arg, args);
 	if (flag2 < 0)
 		return (free_and_return(arg, flag2));
 	if (fmt[arg->end + 1])
@@ -65,7 +65,7 @@ t_fmt_arg	*fst_fmt_arg(const char *fmt)
 	preproc_flags(fmt, res, &i);
 	parse_width(fmt, res, &i);
 	parse_prec(fmt, res, &i);
-	j = parse_conv_spec(fmt, res, &i);
+	j = parse_conv_spec(fmt, res, i);
 	res->end = i;
 	if (j == 1)
 		return (res);
