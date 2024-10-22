@@ -82,13 +82,13 @@ int	iprintf(const t_fmt_arg *farg, const char *num)
 			&& farg->min_width && *(farg->min_width) > *(farg->prec) + 1)
 			j = uprint_pad(*(farg->min_width) - *(farg->prec) - 1);
 		j = iprints_(farg, j, num);
-		if (j >= 0 && *(farg->prec) > ft_strlen(num))
-			j = iprint_padz(*(farg->prec) - ft_strlen(num), num);
+		if (j >= 0 && *(farg->prec) > idigit_len(num))
+			j = iprint_padz(*(farg->prec) - idigit_len(num), num);
 		if (farg->flags->adjust_left
 			&& farg->min_width && *(farg->min_width) > *(farg->prec) + 1)
 			j = uprint_pad(*(farg->min_width) - *(farg->prec) - 1);
 		return (j);
 	}
 	else
-		return (uprintf(farg, num));
+		return (iprintf2(farg, num));
 }

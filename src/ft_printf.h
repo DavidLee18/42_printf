@@ -109,4 +109,8 @@ int			iprints_(const t_fmt_arg *farg, const int j, const char *num);
 
 int			iprint_padz(const size_t len, const char *num);
 
+size_t		idigit_len(const char *num);
+
+int			iprintf2(const t_fmt_arg *farg, const char *num);
+
 #endif

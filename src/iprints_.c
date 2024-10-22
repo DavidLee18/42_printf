@@ -39,3 +39,15 @@ int	iprint_padz(const size_t len, const char *num)
 		j = (int)write(STDOUT_FILENO, num + 1, ft_strlen(num) - 1);
 	return (j);
 }
+
+size_t	idigit_len(const char *num)
+{
+	if (!num)
+		return (0);
+	else if (*num == '-')
+		return (ft_strlen(num + 1));
+	else if (ft_isdigit(*num))
+		return (ft_strlen(num));
+}
+
+int	iprintf2(const t_fmt_arg *farg, const char *num);
