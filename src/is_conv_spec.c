@@ -52,7 +52,7 @@ void	parse_width(const char *fmt, t_fmt_arg *arg, size_t *i)
 	j = *i;
 	while (ft_isdigit(fmt[*i]))
 		(*i)++;
-	sub_str = ft_substr(fmt, j, *i - j + 1);
+	sub_str = ft_substr(fmt, j, *i - j);
 	if (sub_str == NULL)
 		return ;
 	k = ft_atoul(sub_str);

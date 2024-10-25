@@ -64,14 +64,14 @@ int	sprint_f(const t_fmt_arg *farg, const char *str)
 {
 	int	j;
 
+	j = 0;
 	if (farg->min_width && *(farg->min_width) > ft_strlen(str))
 	{
-		if (farg->flags && farg->flags->adjust_left && ft_strlen(str) > 0)
+		if (farg->flags && farg->flags->adjust_left)
 			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
-		if (j > 0 && *(farg->min_width) > ft_strlen(str))
-			j = uprint_pad(*(farg->min_width) > ft_strlen(str));
-		if (j > 0 && !(farg->flags && farg->flags->adjust_left)
-			&& ft_strlen(str) > 0)
+		if (j >= 0)
+			j = uprint_pad(*(farg->min_width) - ft_strlen(str));
+		if (j > 0 && !(farg->flags && farg->flags->adjust_left))
 			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
 		return (j);
 	}

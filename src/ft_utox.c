@@ -64,13 +64,18 @@ int	free_and_return(t_fmt_arg *arg, const int i)
 
 size_t	ft_atoul(const char *str)
 {
-	int		l;
+	size_t	l;
 	size_t	res;
+	size_t	i;
 
 	l = ft_strlen(str);
 	res = 0;
-	while (--l >= 0)
-		res = res * 10 + (str[l] - '0');
+	i = 0;
+	while (i < l)
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
 	return (res);
 }
 
