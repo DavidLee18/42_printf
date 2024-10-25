@@ -87,7 +87,7 @@ int	iprintf5(const t_fmt_arg *farg, const char *num)
 		if (j > 0)
 			j = iprint_digits(num);
 		if (j > 0 && farg->flags->adjust_left && farg->min_width
-			&& *(farg->min_width) > ft_strlen(num) )
+			&& *(farg->min_width) > ft_strlen(num))
 			j = uprint_pad(*(farg->min_width) - ft_strlen(num));
 		return (j);
 	}
@@ -97,6 +97,7 @@ int	iprintf5(const t_fmt_arg *farg, const char *num)
 int	iprintf6(const t_fmt_arg *farg, const char *num)
 {
 	int	j;
+
 	if (farg->min_width && *(farg->min_width) > ft_strlen(num))
 		j = uprint_pad(*(farg->min_width) > ft_strlen(num));
 	j = (int)write(STDOUT_FILENO, num, ft_strlen(num));
