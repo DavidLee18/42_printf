@@ -13,6 +13,7 @@ all: $(NAME)
 bonus: $(NAME)
 
 $(NAME): $(OBJS) libft.a
+	@mv libft.a $(NAME)
 	@ar -rcs $(NAME) $(OBJS)
 
 build/%.o: src/%.c
