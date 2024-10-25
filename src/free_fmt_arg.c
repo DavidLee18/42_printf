@@ -40,7 +40,7 @@ t_flags	*init_flags(void)
 	return (f);
 }
 
-int	print_per(const t_fmt_arg *farg, va_list args)
+int	print_per(const t_fmt_arg *farg)
 {
 	int	i;
 	int	j;
@@ -50,7 +50,7 @@ int	print_per(const t_fmt_arg *farg, va_list args)
 		if (farg->flags && farg->flags->adjust_left)
 			i = (int)write(STDOUT_FILENO, "%", 1);
 		j = -1;
-		while (i > 0 && ++j < *(farg->min_width))
+		while (i > 0 && (size_t)++j < *(farg->min_width))
 			i = (int)write(STDOUT_FILENO, " ", 1);
 		if (i > 0 && !(farg->flags && farg->flags->adjust_left))
 			i = (int)write(STDOUT_FILENO, " ", 1);
@@ -71,7 +71,7 @@ int	sprint_f(const t_fmt_arg *farg, const char *str)
 		if (farg->flags && farg->flags->adjust_left && ft_strlen(str) > 0)
 			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
 		while (j > 0 && *(farg->min_width) > ft_strlen(str)
-			&& ++i < *(farg->min_width) - ft_strlen(str))
+			&& (size_t)++i < *(farg->min_width) - ft_strlen(str))
 			j = (int)write(STDOUT_FILENO, " ", 1);
 		if (j > 0 && !(farg->flags && farg->flags->adjust_left)
 			&& ft_strlen(str) > 0)

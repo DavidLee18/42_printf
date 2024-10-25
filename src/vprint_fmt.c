@@ -25,7 +25,7 @@ int	vprint_fmt(t_fmt_arg *farg, va_list args)
 	else if (farg->conv_spec == 'u')
 		return (vprint_uint(farg, args));
 	else if (farg->conv_spec == '%')
-		return (print_per(farg, args));
+		return (print_per(farg));
 	else if (farg->conv_spec == 'p')
 		return (printp(farg, args));
 	else

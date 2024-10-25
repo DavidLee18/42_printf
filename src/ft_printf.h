@@ -85,7 +85,7 @@ void		free_fmt_arg(t_fmt_arg *arg);
 
 t_flags		*init_flags(void);
 
-int			print_per(const t_fmt_arg *farg, va_list args);
+int			print_per(const t_fmt_arg *farg);
 
 int			printp(t_fmt_arg *farg, va_list args);
 
@@ -120,5 +120,9 @@ int			iprintf3(const t_fmt_arg *farg, const char *num);
 int			iprint_digits(const char *num);
 
 int			iprintf4(const t_fmt_arg *farg, const char *num);
+
+int			iprintf5(const t_fmt_arg *farg, const char *num);
+
+int			iprintf6(const t_fmt_arg *farg, const char *num);
 
 #endif
