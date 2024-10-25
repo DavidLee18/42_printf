@@ -22,6 +22,8 @@ int	iprints_(const t_fmt_arg *farg, const int j, const char *num)
 		return ((int)write(STDOUT_FILENO, "-", 1));
 	else if (farg->flags->blank)
 		return ((int)write(STDOUT_FILENO, " ", 1));
+	else
+		return (j);
 }
 
 int	iprint_padz(const size_t len)
@@ -31,7 +33,7 @@ int	iprint_padz(const size_t len)
 
 	j = 0;
 	i = -1;
-	while (j >= 0 && ++i < len)
+	while (j >= 0 && (size_t)++i < len)
 		j = (int)write(STDOUT_FILENO, "0", 1);
 	return (j);
 }

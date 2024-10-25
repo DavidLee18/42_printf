@@ -19,7 +19,7 @@ int	uprint_pad(const size_t len)
 
 	i = -1;
 	j = 0;
-	while (j >= 0 && ++i < len)
+	while (j >= 0 && (size_t)++i < len)
 		j = (int)write(STDOUT_FILENO, " ", 1);
 	return (j);
 }
@@ -31,7 +31,7 @@ int	uprint_padz(const size_t len, const char *num)
 
 	j = 0;
 	i = -1;
-	while (j >= 0 && ++i < len)
+	while (j >= 0 && (size_t)++i < len)
 		j = (int)write(STDOUT_FILENO, "0", 1);
 	if (j > 0)
 		j = (int)write(STDOUT_FILENO, num, ft_strlen(num));
