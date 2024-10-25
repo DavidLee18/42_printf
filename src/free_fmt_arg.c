@@ -62,17 +62,14 @@ int	print_per(const t_fmt_arg *farg)
 
 int	sprint_f(const t_fmt_arg *farg, const char *str)
 {
-	int	i;
 	int	j;
 
-	i = -1;
 	if (farg->min_width && *(farg->min_width) > ft_strlen(str))
 	{
 		if (farg->flags && farg->flags->adjust_left && ft_strlen(str) > 0)
 			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
-		while (j > 0 && *(farg->min_width) > ft_strlen(str)
-			&& (size_t)++i < *(farg->min_width) - ft_strlen(str))
-			j = (int)write(STDOUT_FILENO, " ", 1);
+		if (j > 0 && *(farg->min_width) > ft_strlen(str))
+			j = uprint_pad(*(farg->min_width) > ft_strlen(str));
 		if (j > 0 && !(farg->flags && farg->flags->adjust_left)
 			&& ft_strlen(str) > 0)
 			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));

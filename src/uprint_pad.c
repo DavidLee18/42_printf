@@ -14,25 +14,31 @@
 
 int	uprint_pad(const size_t len)
 {
-	int	j;
-	int	i;
+	int		j;
+	size_t	i;
 
-	i = -1;
+	i = 0;
 	j = 0;
-	while (j >= 0 && (size_t)++i < len)
+	while (j >= 0 && i < len)
+	{
 		j = (int)write(STDOUT_FILENO, " ", 1);
+		i++;
+	}
 	return (j);
 }
 
 int	uprint_padz(const size_t len, const char *num)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	int		j;
 
 	j = 0;
-	i = -1;
-	while (j >= 0 && (size_t)++i < len)
+	i = 0;
+	while (j >= 0 && i < len)
+	{
 		j = (int)write(STDOUT_FILENO, "0", 1);
+		i++;
+	}
 	if (j > 0)
 		j = (int)write(STDOUT_FILENO, num, ft_strlen(num));
 	return (j);
