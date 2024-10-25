@@ -16,11 +16,11 @@ int	iprints_(const t_fmt_arg *farg, const int j, const char *num)
 {
 	if (j < 0)
 		return (j);
-	else if (farg->flags->sign && ft_isdigit(*num))
+	else if (farg->flags && farg->flags->sign && ft_isdigit(*num))
 		return ((int)write(STDOUT_FILENO, "+", 1));
 	else if (*num == '-')
 		return ((int)write(STDOUT_FILENO, "-", 1));
-	else if (farg->flags->blank)
+	else if (farg->flags && farg->flags->blank)
 		return ((int)write(STDOUT_FILENO, " ", 1));
 	else
 		return (j);

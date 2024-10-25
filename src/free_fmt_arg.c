@@ -90,8 +90,10 @@ int	uprintf(const t_fmt_arg *farg, const char *num)
 			&& farg->min_width && *(farg->min_width) > *(farg->prec))
 			j = uprint_pad(*(farg->min_width) - *(farg->prec));
 		if (j >= 0 && *(farg->prec) > ft_strlen(num))
-			j = uprint_padz(*(farg->prec) - ft_strlen(num), num);
-		if (farg->flags && farg->flags->adjust_left
+			j = uprint_padz(*(farg->prec) - ft_strlen(num));
+		if (j > 0)
+			j = (int)write(STDOUT_FILENO, num, ft_strlen(num));
+		if (j > 0 && farg->flags && farg->flags->adjust_left
 			&& farg->min_width && *(farg->min_width) > *(farg->prec))
 			j = uprint_pad(*(farg->min_width) - *(farg->prec));
 		return (j);

@@ -61,14 +61,19 @@ int	ft_ulog(const size_t base, const size_t n)
 	return (1 + ft_ulog(base, n / base));
 }
 
-int	printp(t_fmt_arg *farg, va_list args)
+int	printp(va_list args)
 {
-	if (!(farg->flags))
-		farg->flags = init_flags();
-	if (!(farg->flags))
+	void	*p;
+	char	*str;
+	int		j;
+
+	p = va_arg(args, void *);
+	str = ultoa((unsigned long)p);
+	if (!str)
 		return (-1);
-	farg->flags->alt_form = 1;
-	return (vprint_hex(farg, args));
+	j = pprintf(str);
+	free(str);
+	return (j);
 }
 
 int	iprintf(const t_fmt_arg *farg, const char *num)
