@@ -107,10 +107,18 @@ int			iprintf(const t_fmt_arg *farg, const char *num);
 
 int			iprints_(const t_fmt_arg *farg, const int j, const char *num);
 
-int			iprint_padz(const size_t len, const char *num);
+int			iprint_padz(const size_t len);
 
 size_t		idigit_len(const char *num);
 
 int			iprintf2(const t_fmt_arg *farg, const char *num);
+
+_Bool		isignof(const char *num);
+
+int			iprintf3(const t_fmt_arg *farg, const char *num);
+
+int			iprint_digits(const char *num);
+
+int			iprintf4(const t_fmt_arg *farg, const char *num);
 
 #endif

@@ -7,7 +7,7 @@ SRC_DIR := src
 
 SRCS := src/ft_printf.c src/vprint_fmt.c src/ft_utox.c src/vprint_hex.c \
 		src/is_conv_spec.c src/free_fmt_arg.c src/uprint_pad.c \
-		src/iprints_.c
+		src/iprints_.c src/iprintf3.c
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 # BONUS			:=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
