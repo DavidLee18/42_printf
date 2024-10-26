@@ -99,15 +99,15 @@ int	xprintf5(const t_fmt_arg *farg, const char *num)
 	return (j);
 }
 
-char	*ultoa(const unsigned long long p)
+char	*ulltox(const unsigned long long p)
 {
-	char			*str;
+	char				*str;
 	unsigned long long	l;
-	unsigned long long i;
+	unsigned long long	i;
 	unsigned long long	p_;
 
 	p_ = p;
-	l = ullog(16, p_);
+	l = ulllog(16, p_);
 	str = (char *)ft_calloc(l + 2, sizeof(char));
 	if (!str)
 		return (NULL);

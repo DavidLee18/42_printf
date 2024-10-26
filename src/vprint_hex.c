@@ -68,7 +68,7 @@ int	printp(va_list args)
 	int		j;
 
 	p = va_arg(args, void *);
-	str = ultoa((unsigned long long)p);
+	str = ulltox((unsigned long long)p);
 	if (!str)
 		return (-1);
 	j = pprintf(str);

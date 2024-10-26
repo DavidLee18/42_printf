@@ -22,9 +22,9 @@ int	pprintf(const char *p)
 	return (j);
 }
 
-unsigned long long	ullog(const unsigned long long base, const unsigned long long ul)
+unsigned long long	ulllog(const unsigned long long base, const unsigned long long ul)
 {
 	if (base == 0 || base == 1 || ul == 0 || ul < base)
 		return (0);
-	return (1 + ullog(base, ul / base));
+	return (1 + ulllog(base, ul / base));
 }
