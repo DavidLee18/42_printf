@@ -99,24 +99,24 @@ int	xprintf5(const t_fmt_arg *farg, const char *num)
 	return (j);
 }
 
-char	*ultoa(const unsigned long p)
+char	*ultoa(const unsigned long long p)
 {
 	char			*str;
-	unsigned long	l;
-	unsigned long	i;
-	unsigned long	p_;
+	unsigned long long	l;
+	unsigned long long i;
+	unsigned long long	p_;
 
 	p_ = p;
-	l = ullog(10, p_);
+	l = ullog(16, p_);
 	str = (char *)ft_calloc(l + 2, sizeof(char));
 	if (!str)
 		return (NULL);
 	str[l + 1] = 0;
 	i = 0;
-	while (i < l)
+	while (i <= l)
 	{
-		str[l - i - 1] = '0' + p_ % 10;
-		p_ /= 10;
+		str[l - i] = "0123456789ABCDEF"[p_ % 16];
+		p_ /= 16;
 		i++;
 	}
 	return (str);

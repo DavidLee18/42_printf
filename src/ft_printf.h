@@ -132,10 +132,10 @@ int				xprintf4(const t_fmt_arg *farg, const char *num);
 
 int				xprintf5(const t_fmt_arg *farg, const char *num);
 
-char			*ultoa(const unsigned long p);
+char			*ultoa(const unsigned long long p);
 
 int				pprintf(const char *p);
 
-unsigned long	ullog(const unsigned long base, const unsigned long ul);
+unsigned long long	ullog(const unsigned long long base, const unsigned long long ul);
 
 #endif
