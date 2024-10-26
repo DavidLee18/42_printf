@@ -44,11 +44,11 @@ int	vprint_chr(const t_fmt_arg *farg, va_list args)
 	{
 		i = -1;
 		if (farg->flags->adjust_left)
-			j = (int)write(STDOUT_FILENO, &c, 1);
-		while ((size_t)++i < *(farg->min_width) && j >= 0)
-			j = (int)write(STDOUT_FILENO, " ", 1);
+			j += (int)write(STDOUT_FILENO, &c, 1);
+		while ((size_t)++i < *(farg->min_width))
+			j += (int)write(STDOUT_FILENO, " ", 1);
 		if (!farg->flags->adjust_left)
-			j = (int)write(STDOUT_FILENO, &c, 1);
+			j += (int)write(STDOUT_FILENO, &c, 1);
 		return (j);
 	}
 	return ((int)write(STDOUT_FILENO, &c, 1));

@@ -16,16 +16,16 @@ int	iprintf3(const t_fmt_arg *farg, const char *num)
 {
 	int	j;
 
+	j = 0;
 	if (farg->prec)
 	{
 		if (farg->min_width
 			&& *(farg->min_width) > *(farg->prec) + isignof(num))
-			j = uprint_pad(*(farg->min_width) - *(farg->prec) - isignof(num));
-		j = iprints_(farg, j, num);
-		if (j >= 0 && *(farg->prec) > idigit_len(num))
-			j = iprint_padz(*(farg->prec) - idigit_len(num));
-		if (j > 0)
-			j = iprint_digits(num);
+			j += uprint_pad(*(farg->min_width) - *(farg->prec) - isignof(num));
+		j += iprints_(farg, j, num);
+		if (*(farg->prec) > idigit_len(num))
+			j += iprint_padz(*(farg->prec) - idigit_len(num));
+		j += iprint_digits(num);
 		return (j);
 	}
 	else
@@ -48,22 +48,22 @@ int	iprintf4(const t_fmt_arg *farg, const char *num)
 {
 	int	j;
 
+	j = 0;
 	if (farg->flags && (farg->flags->blank || farg->flags->sign))
 	{
 		if (!farg->flags->adjust_left && !farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > idigit_len(num) + 1)
-			j = uprint_pad(*(farg->min_width) - idigit_len(num) - 1);
-		j = iprints_(farg, j, num);
-		if (j > 0 && !farg->flags->adjust_left && farg->flags->pad_zero
+			j += uprint_pad(*(farg->min_width) - idigit_len(num) - 1);
+		j += iprints_(farg, j, num);
+		if (!farg->flags->adjust_left && farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > idigit_len(num) + 1)
-			j = iprint_padz(*(farg->min_width) - idigit_len(num) - 1);
-		if (j > 0)
-			j = iprint_digits(num);
-		if (j > 0 && farg->flags->adjust_left && farg->min_width
+			j += iprint_padz(*(farg->min_width) - idigit_len(num) - 1);
+		j += iprint_digits(num);
+		if (farg->flags->adjust_left && farg->min_width
 			&& *(farg->min_width) > idigit_len(num) + 1)
-			j = uprint_pad(*(farg->min_width) - idigit_len(num) - 1);
+			j += uprint_pad(*(farg->min_width) - idigit_len(num) - 1);
 		return (j);
 	}
 	return (iprintf5(farg, num));
@@ -73,22 +73,22 @@ int	iprintf5(const t_fmt_arg *farg, const char *num)
 {
 	int	j;
 
+	j = 0;
 	if (farg->flags)
 	{
 		if (!farg->flags->adjust_left && !farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > ft_strlen(num))
-			j = uprint_pad(*(farg->min_width) - ft_strlen(num));
-		j = iprints_(farg, j, num);
-		if (j > 0 && !farg->flags->adjust_left && farg->flags->pad_zero
+			j += uprint_pad(*(farg->min_width) - ft_strlen(num));
+		j += iprints_(farg, j, num);
+		if (!farg->flags->adjust_left && farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > ft_strlen(num))
-			j = iprint_padz(*(farg->min_width) - ft_strlen(num));
-		if (j > 0)
-			j = iprint_digits(num);
-		if (j > 0 && farg->flags->adjust_left && farg->min_width
+			j += iprint_padz(*(farg->min_width) - ft_strlen(num));
+		j += iprint_digits(num);
+		if (farg->flags->adjust_left && farg->min_width
 			&& *(farg->min_width) > ft_strlen(num))
-			j = uprint_pad(*(farg->min_width) - ft_strlen(num));
+			j += uprint_pad(*(farg->min_width) - ft_strlen(num));
 		return (j);
 	}
 	return (iprintf6(farg, num));
@@ -100,8 +100,9 @@ int	iprintf6(const t_fmt_arg *farg, const char *num)
 	size_t	l;
 
 	l = ft_strlen(num);
+	j = 0;
 	if (farg->min_width && *(farg->min_width) > l)
-		j = uprint_pad(*(farg->min_width) - l);
-	j = (int)write(STDOUT_FILENO, num, l);
+		j += uprint_pad(*(farg->min_width) - l);
+	j += (int)write(STDOUT_FILENO, num, l);
 	return (j);
 }

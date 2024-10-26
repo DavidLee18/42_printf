@@ -45,15 +45,16 @@ int	print_per(const t_fmt_arg *farg)
 	int	i;
 	int	j;
 
+	i = 0;
 	if (farg->min_width)
 	{
 		if (farg->flags && farg->flags->adjust_left)
-			i = (int)write(STDOUT_FILENO, "%", 1);
+			i += (int)write(STDOUT_FILENO, "%", 1);
 		j = -1;
-		while (i > 0 && (size_t)++j < *(farg->min_width))
-			i = (int)write(STDOUT_FILENO, " ", 1);
-		if (i > 0 && !(farg->flags && farg->flags->adjust_left))
-			i = (int)write(STDOUT_FILENO, " ", 1);
+		while ((size_t)++j < *(farg->min_width))
+			i += (int)write(STDOUT_FILENO, " ", 1);
+		if (!(farg->flags && farg->flags->adjust_left))
+			i += (int)write(STDOUT_FILENO, " ", 1);
 		return (*(farg->min_width));
 	}
 	else
@@ -68,11 +69,10 @@ int	sprint_f(const t_fmt_arg *farg, const char *str)
 	if (farg->min_width && *(farg->min_width) > ft_strlen(str))
 	{
 		if (farg->flags && farg->flags->adjust_left)
-			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
-		if (j >= 0)
-			j = uprint_pad(*(farg->min_width) - ft_strlen(str));
-		if (j > 0 && !(farg->flags && farg->flags->adjust_left))
-			j = (int)write(STDOUT_FILENO, str, ft_strlen(str));
+			j += (int)write(STDOUT_FILENO, str, ft_strlen(str));
+		j += uprint_pad(*(farg->min_width) - ft_strlen(str));
+		if (!(farg->flags && farg->flags->adjust_left))
+			j += (int)write(STDOUT_FILENO, str, ft_strlen(str));
 		return (j);
 	}
 	else
@@ -88,14 +88,13 @@ int	uprintf(const t_fmt_arg *farg, const char *num)
 	{
 		if (!(farg->flags && farg->flags->adjust_left)
 			&& farg->min_width && *(farg->min_width) > *(farg->prec))
-			j = uprint_pad(*(farg->min_width) - *(farg->prec));
-		if (j >= 0 && *(farg->prec) > ft_strlen(num))
-			j = uprint_padz(*(farg->prec) - ft_strlen(num));
-		if (j > 0)
-			j = (int)write(STDOUT_FILENO, num, ft_strlen(num));
-		if (j > 0 && farg->flags && farg->flags->adjust_left
+			j += uprint_pad(*(farg->min_width) - *(farg->prec));
+		if (*(farg->prec) > ft_strlen(num))
+			j += uprint_padz(*(farg->prec) - ft_strlen(num));
+		j += (int)write(STDOUT_FILENO, num, ft_strlen(num));
+		if (farg->flags && farg->flags->adjust_left
 			&& farg->min_width && *(farg->min_width) > *(farg->prec))
-			j = uprint_pad(*(farg->min_width) - *(farg->prec));
+			j += uprint_pad(*(farg->min_width) - *(farg->prec));
 		return (j);
 	}
 	else

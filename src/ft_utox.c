@@ -84,11 +84,16 @@ long	ft_atol(const char *str)
 	int		l;
 	long	sign;
 	long	res;
+	int		i;
 
 	sign = (*str != '-') * 2 - 1;
 	l = ft_strlen(str);
 	res = 0;
-	while (--l >= (sign == -1))
-		res = res * 10 + sign * (str[l] - '0');
+	i = 0;
+	while (i + (sign == -1) < l)
+	{
+		res = res * 10 + sign * (str[i] - '0');
+		i++;
+	}
 	return (res);
 }
