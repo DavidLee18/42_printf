@@ -63,38 +63,49 @@ int	print_per(const t_fmt_arg *farg)
 
 int	sprint_f(const t_fmt_arg *farg, const char *str)
 {
-	int	j;
+	int		j;
+	size_t	l;
 
 	j = 0;
-	if (farg->min_width && *(farg->min_width) > ft_strlen(str))
+	if (!str || !*str)
+		l = 0;
+	else
+		l = ft_strlen(str);
+	if (farg->min_width && *(farg->min_width) > l)
 	{
 		if (farg->flags && farg->flags->adjust_left)
-			j += (int)write(STDOUT_FILENO, str, ft_strlen(str));
-		j += uprint_pad(*(farg->min_width) - ft_strlen(str));
+			j += (int)write(STDOUT_FILENO, str, l);
+		j += uprint_pad(*(farg->min_width) - l);
 		if (!(farg->flags && farg->flags->adjust_left))
-			j += (int)write(STDOUT_FILENO, str, ft_strlen(str));
+			j += (int)write(STDOUT_FILENO, str, l);
 		return (j);
 	}
+	else if (l > 0)
+		return ((int)write(STDOUT_FILENO, str, l));
 	else
-		return ((int)write(STDOUT_FILENO, str, ft_strlen(str)));
+		return (0);
 }
 
 int	uprintf(const t_fmt_arg *farg, const char *num)
 {
-	int	j;
+	int		j;
+	size_t	l;
 
 	j = 0;
 	if (farg->prec)
 	{
+		l = ft_max(ft_strlen(num) - (*num == '0'),
+				*(farg->prec) + isignof(num));
 		if (!(farg->flags && farg->flags->adjust_left)
-			&& farg->min_width && *(farg->min_width) > *(farg->prec))
-			j += uprint_pad(*(farg->min_width) - *(farg->prec));
+			&& farg->min_width && *(farg->min_width) > l)
+			j += uprint_pad(*(farg->min_width) - l);
 		if (*(farg->prec) > ft_strlen(num))
 			j += uprint_padz(*(farg->prec) - ft_strlen(num));
-		j += (int)write(STDOUT_FILENO, num, ft_strlen(num));
+		if (*(farg->prec) || *num != '0')
+			j += (int)write(STDOUT_FILENO, num, ft_strlen(num));
 		if (farg->flags && farg->flags->adjust_left
-			&& farg->min_width && *(farg->min_width) > *(farg->prec))
-			j += uprint_pad(*(farg->min_width) - *(farg->prec));
+			&& farg->min_width && *(farg->min_width) > l)
+			j += uprint_pad(*(farg->min_width) - l);
 		return (j);
 	}
 	else

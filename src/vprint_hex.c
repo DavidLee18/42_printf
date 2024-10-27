@@ -61,7 +61,7 @@ int	ft_ulog(const size_t base, const size_t n)
 	return (1 + ft_ulog(base, n / base));
 }
 
-int	printp(va_list args)
+int	printp(const t_fmt_arg *farg, va_list args)
 {
 	void	*p;
 	char	*str;
@@ -71,7 +71,7 @@ int	printp(va_list args)
 	str = ulltox((unsigned long long)p);
 	if (!str)
 		return (-1);
-	j = pprintf(str);
+	j = pprintf(farg, str);
 	free(str);
 	return (j);
 }
@@ -86,7 +86,7 @@ int	iprintf(const t_fmt_arg *farg, const char *num)
 		if (!farg->flags->adjust_left
 			&& farg->min_width && *(farg->min_width) > *(farg->prec) + 1)
 			j += uprint_pad(*(farg->min_width) - *(farg->prec) - 1);
-		j += iprints_(farg, j, num);
+		j += iprints_(farg, num);
 		if (*(farg->prec) > idigit_len(num))
 			j += iprint_padz(*(farg->prec) - idigit_len(num));
 		j += iprint_digits(num);

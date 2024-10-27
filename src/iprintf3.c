@@ -22,10 +22,12 @@ int	iprintf3(const t_fmt_arg *farg, const char *num)
 		if (farg->min_width
 			&& *(farg->min_width) > *(farg->prec) + isignof(num))
 			j += uprint_pad(*(farg->min_width) - *(farg->prec) - isignof(num));
-		j += iprints_(farg, j, num);
+		if (*(farg->prec) || *num != '0')
+			j += iprints_(farg, num);
 		if (*(farg->prec) > idigit_len(num))
 			j += iprint_padz(*(farg->prec) - idigit_len(num));
-		j += iprint_digits(num);
+		if (*(farg->prec) || *num != '0')
+			j += iprint_digits(num);
 		return (j);
 	}
 	else
@@ -55,7 +57,7 @@ int	iprintf4(const t_fmt_arg *farg, const char *num)
 			&& farg->min_width
 			&& *(farg->min_width) > idigit_len(num) + 1)
 			j += uprint_pad(*(farg->min_width) - idigit_len(num) - 1);
-		j += iprints_(farg, j, num);
+		j += iprints_(farg, num);
 		if (!farg->flags->adjust_left && farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > idigit_len(num) + 1)
@@ -80,7 +82,7 @@ int	iprintf5(const t_fmt_arg *farg, const char *num)
 			&& farg->min_width
 			&& *(farg->min_width) > ft_strlen(num))
 			j += uprint_pad(*(farg->min_width) - ft_strlen(num));
-		j += iprints_(farg, j, num);
+		j += iprints_(farg, num);
 		if (!farg->flags->adjust_left && farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > ft_strlen(num))

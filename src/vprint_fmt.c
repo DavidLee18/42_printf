@@ -27,7 +27,7 @@ int	vprint_fmt(t_fmt_arg *farg, va_list args)
 	else if (farg->conv_spec == '%')
 		return (print_per(farg));
 	else if (farg->conv_spec == 'p')
-		return (printp(args));
+		return (printp(farg, args));
 	else
 		return (-1);
 }
@@ -35,23 +35,26 @@ int	vprint_fmt(t_fmt_arg *farg, va_list args)
 int	vprint_chr(const t_fmt_arg *farg, va_list args)
 {
 	unsigned char	c;
-	int				i;
+	size_t			i;
 	int				j;
 
 	c = va_arg(args, int);
 	j = 0;
 	if (farg->flags && farg->min_width && *(farg->min_width) > 1)
 	{
-		i = -1;
+		i = 0;
 		if (farg->flags->adjust_left)
 			j += (int)write(STDOUT_FILENO, &c, 1);
-		while ((size_t)++i < *(farg->min_width))
+		while (i < *(farg->min_width) - 1)
+		{
 			j += (int)write(STDOUT_FILENO, " ", 1);
+			i++;
+		}
 		if (!farg->flags->adjust_left)
 			j += (int)write(STDOUT_FILENO, &c, 1);
 		return (j);
 	}
-	return ((int)write(STDOUT_FILENO, &c, 1));
+	return (cprintf(farg, c));
 }
 
 int	vprint_str(const t_fmt_arg *farg, va_list args)
@@ -62,9 +65,16 @@ int	vprint_str(const t_fmt_arg *farg, va_list args)
 
 	str = NULL;
 	str = va_arg(args, char *);
-	if (!str)
-		return (-1);
-	if (farg->prec && *(farg->prec) < ft_strlen(str))
+	if (!str && (!farg->prec || *(farg->prec) >= 6))
+	{
+		temp = ft_calloc(7, sizeof(char));
+		if (!temp)
+			return (-1);
+		ft_strlcpy(temp, "(null)", 7);
+	}
+	else if (!str || !*str)
+		return (0);
+	else if (farg->prec && *(farg->prec) < ft_strlen(str))
 		temp = ft_substr(str, 0, *(farg->prec));
 	else
 		temp = ft_strdup(str);

@@ -88,7 +88,7 @@ t_flags				*init_flags(void);
 
 int					print_per(const t_fmt_arg *farg);
 
-int					printp(va_list args);
+int					printp(const t_fmt_arg *farg, va_list args);
 
 int					sprint_f(const t_fmt_arg *farg, const char *str);
 
@@ -106,8 +106,7 @@ int					xprintf2(const t_fmt_arg *farg, const char *num);
 
 int					iprintf(const t_fmt_arg *farg, const char *num);
 
-int					iprints_(const t_fmt_arg *farg, const int j,
-						const char *num);
+int					iprints_(const t_fmt_arg *farg, const char *num);
 
 int					iprint_padz(const size_t len);
 
@@ -135,9 +134,15 @@ int					xprintf5(const t_fmt_arg *farg, const char *num);
 
 char				*ulltox(const unsigned long long p);
 
-int					pprintf(const char *p);
+int					pprintf(const t_fmt_arg *farg, const char *p);
 
 unsigned long long	ulllog(const unsigned long long base,
 						const unsigned long long ul);
+
+int					cprintf(const t_fmt_arg *farg, const unsigned char c);
+
+size_t				ppreflen(const char *p);
+
+size_t				ft_max(const size_t a, const size_t b);
 
 #endif

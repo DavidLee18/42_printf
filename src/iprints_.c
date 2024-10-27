@@ -12,18 +12,16 @@
 
 #include "ft_printf.h"
 
-int	iprints_(const t_fmt_arg *farg, const int j, const char *num)
+int	iprints_(const t_fmt_arg *farg, const char *num)
 {
-	if (j < 0)
-		return (j);
-	else if (farg->flags && farg->flags->sign && ft_isdigit(*num))
+	if (farg->flags && farg->flags->sign && ft_isdigit(*num))
 		return ((int)write(STDOUT_FILENO, "+", 1));
 	else if (*num == '-')
 		return ((int)write(STDOUT_FILENO, "-", 1));
 	else if (farg->flags && farg->flags->blank)
 		return ((int)write(STDOUT_FILENO, " ", 1));
 	else
-		return (j);
+		return (0);
 }
 
 int	iprint_padz(const size_t len)
@@ -57,23 +55,25 @@ _Bool	isignof(const char *num)
 
 int	iprintf2(const t_fmt_arg *farg, const char *num)
 {
-	int	j;
+	int		j;
+	size_t	l;
 
 	j = 0;
 	if (farg->prec && farg->flags)
 	{
-		if (!farg->flags->adjust_left
-			&& farg->min_width
-			&& *(farg->min_width) > *(farg->prec) + isignof(num))
-			j += uprint_pad(*(farg->min_width) - *(farg->prec) - isignof(num));
-		j += iprints_(farg, j, num);
+		l = ft_max(ft_strlen(num) - (*num == '0'),
+				*(farg->prec) + isignof(num));
+		if (!farg->flags->adjust_left && farg->min_width
+			&& *(farg->min_width) > l)
+			j += uprint_pad(*(farg->min_width) - l);
+		j += iprints_(farg, num);
 		if (*(farg->prec) > idigit_len(num))
 			j += iprint_padz(*(farg->prec) - idigit_len(num));
-		j += iprint_digits(num);
-		if (farg->flags->adjust_left
-			&& farg->min_width
-			&& *(farg->min_width) > *(farg->prec) + isignof(num))
-			j += uprint_pad(*(farg->min_width) - *(farg->prec) - isignof(num));
+		if (*(farg->prec) || *num != '0')
+			j += iprint_digits(num);
+		if (farg->flags->adjust_left && farg->min_width
+			&& *(farg->min_width) > l)
+			j += uprint_pad(*(farg->min_width) - l);
 		return (j);
 	}
 	else
