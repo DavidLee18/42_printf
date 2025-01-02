@@ -55,7 +55,7 @@ int	print_per(const t_fmt_arg *farg)
 			i += (int)write(STDOUT_FILENO, " ", 1);
 		if (!(farg->flags && farg->flags->adjust_left))
 			i += (int)write(STDOUT_FILENO, " ", 1);
-		return (*(farg->min_width));
+		return (i);
 	}
 	else
 		return ((int)write(STDOUT_FILENO, "%", 1));
