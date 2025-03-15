@@ -6,7 +6,7 @@
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:55:16 by jaehylee          #+#    #+#             */
-/*   Updated: 2024/10/16 14:55:25 by jaehylee         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:57:34 by jaehylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,17 @@ t_flags	*init_flags(void)
 
 int	print_per(const t_fmt_arg *farg)
 {
-	int	i;
 	int	j;
 
-	i = 0;
 	if (farg->min_width)
 	{
 		if (farg->flags && farg->flags->adjust_left)
-			i += (int)write(STDOUT_FILENO, "%", 1);
+			write(STDOUT_FILENO, "%", 1);
 		j = -1;
 		while ((size_t)++j < *(farg->min_width))
-			i += (int)write(STDOUT_FILENO, " ", 1);
+			write(STDOUT_FILENO, " ", 1);
 		if (!(farg->flags && farg->flags->adjust_left))
-			i += (int)write(STDOUT_FILENO, " ", 1);
+			write(STDOUT_FILENO, " ", 1);
 		return (*(farg->min_width));
 	}
 	else
