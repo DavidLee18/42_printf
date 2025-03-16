@@ -37,41 +37,39 @@ typedef struct s_fmt_arg
 
 int					ft_printf(const char *fmt, ...);
 
-int					ft_vprintf(const char *fmt, va_list args);
+int					ft_vprintf(t_list **dyn, const char *fmt, va_list args);
 
-t_fmt_arg			*fst_fmt_arg(const char *fmt);
+t_fmt_arg			*fst_fmt_arg(t_list **dyn, const char *fmt);
 
-int					vprint_fmt(t_fmt_arg *farg, va_list args);
+int					vprint_fmt(t_list **dyn, t_fmt_arg *farg, va_list args);
 
 int					sum_or_error(const int i, const int j, const int k);
 
 int					vprint_chr(const t_fmt_arg *farg, va_list args);
 
-int					vprint_str(const t_fmt_arg *farg, va_list args);
+int					vprint_str(t_list **dyn, const t_fmt_arg *farg, va_list args);
 
-int					vprint_hex(const t_fmt_arg *farg, va_list args);
+int					vprint_hex(t_list **dyn, const t_fmt_arg *farg, va_list args);
 
-int					vprint_int(const t_fmt_arg *farg, va_list args);
+int					vprint_int(t_list **dyn, const t_fmt_arg *farg, va_list args);
 
-int					vprint_uint(const t_fmt_arg *farg, va_list args);
+int					vprint_uint(t_list **dyn, const t_fmt_arg *farg, va_list args);
 
-char				*ft_utoa(unsigned int u);
+char				*gc_utoa(t_list **dyn, unsigned int u);
 
 int					ft_ulog(const size_t base, const size_t n);
 
-char				*ft_utox(unsigned int u);
+char				*gc_utox(t_list **dyn, unsigned int u);
 
-char				*ft_utox_(unsigned int u);
+char				*gc_utox_(t_list **dyn, unsigned int u);
 
 _Bool				is_conv_spec(const char c);
 
-void				preproc_flags(const char *fmt, t_fmt_arg *arg, size_t *i);
+void				preproc_flags(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i);
 
-int					free_and_return(t_fmt_arg *arg, const int i);
+void				parse_width(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i);
 
-void				parse_width(const char *fmt, t_fmt_arg *arg, size_t *i);
-
-void				parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i);
+void				parse_prec(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i);
 
 _Bool				parse_conv_spec(const char *fmt,
 						t_fmt_arg *arg, const size_t i);
@@ -80,15 +78,13 @@ size_t				ft_atoul(const char *str);
 
 long				ft_atol(const char *str);
 
-t_fmt_arg			*init_fmt_arg(void);
+t_fmt_arg			*init_fmt_arg(t_list **dyn);
 
-void				free_fmt_arg(t_fmt_arg *arg);
-
-t_flags				*init_flags(void);
+t_flags				*init_flags(t_list **dyn);
 
 int					print_per(const t_fmt_arg *farg);
 
-int					printp(const t_fmt_arg *farg, va_list args);
+int					printp(t_list **dyn, const t_fmt_arg *farg, va_list args);
 
 int					sprint_f(const t_fmt_arg *farg, const char *str);
 
@@ -132,17 +128,15 @@ int					xprintf4(const t_fmt_arg *farg, const char *num);
 
 int					xprintf5(const t_fmt_arg *farg, const char *num);
 
-char				*ulltox(const unsigned long long p);
+char				*ulltox(t_list **dyn, unsigned long long p);
 
 int					pprintf(const t_fmt_arg *farg, const char *p);
 
-unsigned long long	ulllog(const unsigned long long base,
-						const unsigned long long ul);
+unsigned long long	ulllog(unsigned long long base,
+						unsigned long long ul);
 
-int					cprintf(const t_fmt_arg *farg, const unsigned char c);
+int					cprintf(const t_fmt_arg *farg, unsigned char c);
 
-size_t				ppreflen(const char *p);
-
-size_t				ft_max(const size_t a, const size_t b);
+size_t				usize_max(size_t a, size_t b);
 
 #endif

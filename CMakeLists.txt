@@ -6,7 +6,7 @@ add_subdirectory(libft)
 set(SOURCE_FILES
 		src/free_fmt_arg.c
 		src/ft_printf.c
-		src/ft_utox.c
+		src/gc_utox.c
 		src/iprintf3.c
 		src/iprints_.c
 		src/is_conv_spec.c

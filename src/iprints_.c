@@ -61,7 +61,7 @@ int	iprintf2(const t_fmt_arg *farg, const char *num)
 	j = 0;
 	if (farg->prec && farg->flags)
 	{
-		l = ft_max(ft_strlen(num) - (*num == '0'),
+		l = usize_max(ft_strlen(num) - (*num == '0'),
 				*(farg->prec) + isignof(num));
 		if (!farg->flags->adjust_left && farg->min_width
 			&& *(farg->min_width) > l)
