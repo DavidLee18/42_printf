@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	vprint_hex(const t_fmt_arg *farg, va_list args)
+int	vprint_hex(t_list **dyn, const t_fmt_arg *farg, va_list args)
 {
 	unsigned int	u;
 	char			*str;
@@ -20,17 +20,16 @@ int	vprint_hex(const t_fmt_arg *farg, va_list args)
 
 	u = va_arg(args, unsigned int);
 	if (farg->conv_spec == 'x')
-		str = ft_utox(u);
+		str = gc_utox(dyn, u);
 	else
-		str = ft_utox_(u);
+		str = gc_utox_(dyn, u);
 	if (!str)
 		return (-1);
 	res = xprintf(farg, str);
-	free(str);
 	return (res);
 }
 
-char	*ft_utoa(unsigned int u)
+char	*gc_utoa(t_list **dyn, unsigned int u)
 {
 	char			*str;
 	int				dgt_len;
@@ -40,7 +39,7 @@ char	*ft_utoa(unsigned int u)
 	dgt_len = ft_ulog(10, u);
 	if (dgt_len == -1)
 		dgt_len = 0;
-	str = (char *)ft_calloc(dgt_len + 2, sizeof(char));
+	str = (char *)gc_calloc(dyn, dgt_len + 2, sizeof(char));
 	if (!str)
 		return (NULL);
 	str[dgt_len + 1] = 0;
@@ -61,18 +60,17 @@ int	ft_ulog(const size_t base, const size_t n)
 	return (1 + ft_ulog(base, n / base));
 }
 
-int	printp(const t_fmt_arg *farg, va_list args)
+int	printp(t_list **dyn, const t_fmt_arg *farg, va_list args)
 {
 	void	*p;
 	char	*str;
 	int		j;
 
 	p = va_arg(args, void *);
-	str = ulltox((unsigned long long)p);
+	str = ulltox(dyn, (unsigned long long)p);
 	if (!str)
 		return (-1);
 	j = pprintf(farg, str);
-	free(str);
 	return (j);
 }
 

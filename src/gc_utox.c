@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_utox(unsigned int u)
+char	*gc_utox(t_list **dyn, unsigned int u)
 {
 	char			*str;
 	int				dgt_len;
@@ -22,7 +22,7 @@ char	*ft_utox(unsigned int u)
 	dgt_len = ft_ulog(16, u);
 	if (dgt_len == -1)
 		dgt_len = 0;
-	str = (char *)ft_calloc(dgt_len + 2, sizeof(char));
+	str = (char *)gc_calloc(dyn, dgt_len + 2, sizeof(char));
 	if (!str)
 		return (NULL);
 	str[dgt_len + 1] = 0;
@@ -34,7 +34,7 @@ char	*ft_utox(unsigned int u)
 	return (str);
 }
 
-char	*ft_utox_(unsigned int u)
+char	*gc_utox_(t_list **dyn, unsigned int u)
 {
 	char			*str;
 	int				dgt_len;
@@ -44,7 +44,7 @@ char	*ft_utox_(unsigned int u)
 	dgt_len = ft_ulog(16, u);
 	if (dgt_len == -1)
 		dgt_len = 0;
-	str = (char *)ft_calloc(dgt_len + 2, sizeof(char));
+	str = (char *)gc_calloc(dyn, dgt_len + 2, sizeof(char));
 	if (!str)
 		return (NULL);
 	str[dgt_len + 1] = 0;
@@ -54,12 +54,6 @@ char	*ft_utox_(unsigned int u)
 		n /= 16;
 	}
 	return (str);
-}
-
-int	free_and_return(t_fmt_arg *arg, const int i)
-{
-	free_fmt_arg(arg);
-	return (i);
 }
 
 size_t	ft_atoul(const char *str)

@@ -65,15 +65,7 @@ int	cprintf(const t_fmt_arg *farg, const unsigned char c)
 	return ((int)write(STDOUT_FILENO, &c, 1));
 }
 
-size_t	ppreflen(const char *p)
-{
-	if (*p == '(')
-		return (0);
-	else
-		return (2);
-}
-
-size_t	ft_max(const size_t a, const size_t b)
+size_t	usize_max(const size_t a, const size_t b)
 {
 	if (a > b)
 		return (a);

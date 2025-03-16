@@ -12,24 +12,11 @@
 
 #include "ft_printf.h"
 
-void	free_fmt_arg(t_fmt_arg *arg)
-{
-	if (!arg)
-		return ;
-	if (arg->flags)
-		free(arg->flags);
-	if (arg->min_width)
-		free(arg->min_width);
-	if (arg->prec)
-		free(arg->prec);
-	free(arg);
-}
-
-t_flags	*init_flags(void)
+t_flags	*init_flags(t_list **dyn)
 {
 	t_flags	*f;
 
-	f = (t_flags *)ft_calloc(1, sizeof(t_flags));
+	f = (t_flags *)gc_calloc(dyn, 1, sizeof(t_flags));
 	if (!f)
 		return (NULL);
 	f->adjust_left = 0;
@@ -92,7 +79,7 @@ int	uprintf(const t_fmt_arg *farg, const char *num)
 	j = 0;
 	if (farg->prec)
 	{
-		l = ft_max(ft_strlen(num) - (*num == '0'),
+		l = usize_max(ft_strlen(num) - (*num == '0'),
 				*(farg->prec) + isignof(num));
 		if (!(farg->flags && farg->flags->adjust_left)
 			&& farg->min_width && *(farg->min_width) > l)

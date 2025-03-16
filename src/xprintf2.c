@@ -20,7 +20,7 @@ int	xprintf2(const t_fmt_arg *farg, const char *num)
 	j = 0;
 	if (farg->prec)
 	{
-		l = ft_max(ft_strlen(num) - (*num == '0'), *(farg->prec));
+		l = usize_max(ft_strlen(num) - (*num == '0'), *(farg->prec));
 		if (!(farg->flags && farg->flags->adjust_left)
 			&& farg->min_width && *(farg->min_width) > l)
 			j += uprint_pad(*(farg->min_width) - l);
@@ -98,7 +98,7 @@ int	xprintf5(const t_fmt_arg *farg, const char *num)
 	return (j);
 }
 
-char	*ulltox(const unsigned long long p)
+char	*ulltox(t_list **dyn, const unsigned long long p)
 {
 	char				*str;
 	unsigned long long	l;
@@ -107,7 +107,7 @@ char	*ulltox(const unsigned long long p)
 
 	p_ = p;
 	l = ulllog(16, p_);
-	str = (char *)ft_calloc(l + 2, sizeof(char));
+	str = (char *)gc_calloc(dyn, l + 2, sizeof(char));
 	if (!str)
 		return (NULL);
 	str[l + 1] = 0;

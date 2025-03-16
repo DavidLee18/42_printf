@@ -20,12 +20,12 @@ _Bool	is_conv_spec(const char c)
 		|| c == '%');
 }
 
-void	preproc_flags(const char *fmt, t_fmt_arg *arg, size_t *i)
+void	preproc_flags(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i)
 {
 	if (!(fmt[*i] == '#' || fmt[*i] == '0' || fmt[*i] == '-'
 			|| fmt[*i] == ' ' || fmt[*i] == '+'))
 		return ;
-	arg->flags = init_flags();
+	arg->flags = init_flags(dyn);
 	if (arg->flags == NULL)
 		return ;
 	while (fmt[*i] == '#' || fmt[*i] == '0' || fmt[*i] == '-'
@@ -38,10 +38,9 @@ void	preproc_flags(const char *fmt, t_fmt_arg *arg, size_t *i)
 		arg->flags->sign += (fmt[*i] == '+');
 		(*i)++;
 	}
-	return ;
 }
 
-void	parse_width(const char *fmt, t_fmt_arg *arg, size_t *i)
+void	parse_width(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i)
 {
 	size_t	j;
 	size_t	k;
@@ -52,18 +51,17 @@ void	parse_width(const char *fmt, t_fmt_arg *arg, size_t *i)
 	j = *i;
 	while (ft_isdigit(fmt[*i]))
 		(*i)++;
-	sub_str = ft_substr(fmt, j, *i - j);
+	sub_str = gc_substr(dyn, fmt, j, *i - j);
 	if (sub_str == NULL)
 		return ;
 	k = ft_atoul(sub_str);
-	arg->min_width = (size_t *)ft_calloc(1, sizeof(size_t));
-	free(sub_str);
+	arg->min_width = (size_t *)gc_calloc(dyn, 1, sizeof(size_t));
 	if (arg->min_width == NULL)
 		return ;
 	*(arg->min_width) = k;
 }
 
-void	parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i)
+void	parse_prec(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i)
 {
 	size_t	j;
 	char	*sub_str;
@@ -76,24 +74,23 @@ void	parse_prec(const char *fmt, t_fmt_arg *arg, size_t *i)
 		return ;
 	while (fmt[*i] >= '0' && fmt[*i] <= '9')
 		(*i)++;
-	sub_str = ft_substr(fmt, j, *i - j);
+	sub_str = gc_substr(dyn, fmt, j, *i - j);
 	if (sub_str == NULL)
 		return ;
 	l = 0;
 	if (ft_strlen(sub_str) != 0)
 		l = ft_atoul(sub_str);
-	free(sub_str);
-	arg->prec = (size_t *)ft_calloc(1, sizeof(size_t));
+	arg->prec = (size_t *)gc_calloc(dyn, 1, sizeof(size_t));
 	if (arg->prec == NULL)
 		return ;
 	*(arg->prec) = l;
 }
 
-t_fmt_arg	*init_fmt_arg(void)
+t_fmt_arg	*init_fmt_arg(t_list **dyn)
 {
 	t_fmt_arg	*arg;
 
-	arg = (t_fmt_arg *)ft_calloc(1, sizeof(t_fmt_arg));
+	arg = (t_fmt_arg *)gc_calloc(dyn, 1, sizeof(t_fmt_arg));
 	if (arg == NULL)
 		return (NULL);
 	arg->conv_spec = 0;
