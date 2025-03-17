@@ -20,6 +20,7 @@ int	ft_fprintf(const int fd, const char *fmt, ...)
 
 	if (!fmt || !*fmt)
 		return (-1);
+	dyn = NULL;
 	va_start(args, fmt);
 	res = ft_vprintf(&dyn, fd, fmt, args);
 	va_end(args);
