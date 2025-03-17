@@ -139,4 +139,8 @@ int					cprintf(int fd, const t_fmt_arg *farg, unsigned char c);
 
 size_t				usize_max(size_t a, size_t b);
 
+int					print_vec(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
+
+int					print_vec2(t_list **dyn, int fd, const t_fmt_arg *farg, t_vec v);
+
 #endif

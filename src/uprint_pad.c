@@ -94,3 +94,31 @@ int	xprintf(const int fd, const t_fmt_arg *farg, const char *num)
 	else
 		return (xprintf2(fd, farg, num));
 }
+
+int	print_vec(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args)
+{
+	t_vec	v;
+	size_t	i;
+	int		j;
+	char	*str;
+
+	v = va_arg(args, t_vec);
+	j = (int)write(fd, "vec[", 4);
+	if (j < 0)
+		return (j);
+	if (farg->flags && farg->flags->adjust_left)
+	{
+		i = v.len;
+		while (i > 0)
+		{
+			str = gc_itoa(dyn, v.ptr[i - 1]);
+			if (str == NULL)
+				return (-1);
+			j += (int)write(fd, str, ft_strlen(str));
+			if (i != 1)
+				j += (int)write(fd, ", ", 2);
+			i--;
+		}
+	}
+	return (j + print_vec2(dyn, fd, farg, v));
+}

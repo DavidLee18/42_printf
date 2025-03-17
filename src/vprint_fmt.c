@@ -28,6 +28,8 @@ int	vprint_fmt(t_list **dyn, const int fd, t_fmt_arg *farg, va_list args)
 		return (print_per(fd, farg));
 	else if (farg->conv_spec == 'p')
 		return (printp(dyn, fd, farg, args));
+	else if (farg->conv_spec == 'v')
+		return (print_vec(dyn, fd, farg, args));
 	else
 		return (-1);
 }
