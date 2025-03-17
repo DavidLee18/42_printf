@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *fmt, ...)
+int	ft_fprintf(const int fd, const char *fmt, ...)
 {
 	va_list	args;
 	int		res;
@@ -21,12 +21,12 @@ int	ft_printf(const char *fmt, ...)
 	if (!fmt || !*fmt)
 		return (-1);
 	va_start(args, fmt);
-	res = ft_vprintf(&dyn, fmt, args);
+	res = ft_vprintf(&dyn, fd, fmt, args);
 	va_end(args);
 	return (gc_free_all(dyn), res);
 }
 
-int	ft_vprintf(t_list **dyn, const char *fmt, va_list args)
+int	ft_vprintf(t_list **dyn, const int fd, const char *fmt, const va_list args)
 {
 	t_fmt_arg	*arg;
 	int			flag;
@@ -34,16 +34,16 @@ int	ft_vprintf(t_list **dyn, const char *fmt, va_list args)
 
 	arg = fst_fmt_arg(dyn, fmt);
 	if (!arg)
-		return ((int)write(STDOUT_FILENO, fmt, ft_strlen(fmt)));
-	flag = (int)write(STDOUT_FILENO, fmt, arg->start);
+		return ((int)write(fd, fmt, ft_strlen(fmt)));
+	flag = (int)write(fd, fmt, arg->start);
 	if (flag < 0)
 		return (flag);
-	flag2 = vprint_fmt(dyn, arg, args);
+	flag2 = vprint_fmt(dyn, fd, arg, args);
 	if (flag2 < 0)
 		return (flag2);
 	if (fmt[arg->end + 1])
 		return (sum_or_error(flag, flag2,
-					ft_vprintf(dyn, fmt + arg->end + 1, args)));
+					ft_vprintf(dyn, fd, fmt + arg->end + 1, args)));
 	return (flag + flag2);
 }
 

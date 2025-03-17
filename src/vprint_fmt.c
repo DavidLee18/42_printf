@@ -12,27 +12,27 @@
 
 #include "ft_printf.h"
 
-int	vprint_fmt(t_list **dyn, t_fmt_arg *farg, va_list args)
+int	vprint_fmt(t_list **dyn, const int fd, t_fmt_arg *farg, va_list args)
 {
 	if (farg->conv_spec == 'c')
-		return (vprint_chr(farg, args));
+		return (vprint_chr(fd, farg, args));
 	else if (farg->conv_spec == 's')
-		return (vprint_str(dyn, farg, args));
+		return (vprint_str(dyn, fd, farg, args));
 	else if (farg->conv_spec == 'x' || farg->conv_spec == 'X')
-		return (vprint_hex(dyn, farg, args));
+		return (vprint_hex(dyn, fd, farg, args));
 	else if (farg->conv_spec == 'i' || farg->conv_spec == 'd')
-		return (vprint_int(dyn, farg, args));
+		return (vprint_int(dyn, fd, farg, args));
 	else if (farg->conv_spec == 'u')
-		return (vprint_uint(dyn, farg, args));
+		return (vprint_uint(dyn, fd, farg, args));
 	else if (farg->conv_spec == '%')
-		return (print_per(farg));
+		return (print_per(fd, farg));
 	else if (farg->conv_spec == 'p')
-		return (printp(dyn, farg, args));
+		return (printp(dyn, fd, farg, args));
 	else
 		return (-1);
 }
 
-int	vprint_chr(const t_fmt_arg *farg, va_list args)
+int	vprint_chr(const int fd, const t_fmt_arg *farg, va_list args)
 {
 	unsigned char	c;
 	size_t			i;
@@ -44,20 +44,20 @@ int	vprint_chr(const t_fmt_arg *farg, va_list args)
 	{
 		i = 0;
 		if (farg->flags->adjust_left)
-			j += (int)write(STDOUT_FILENO, &c, 1);
+			j += (int)write(fd, &c, 1);
 		while (i < *(farg->min_width) - 1)
 		{
-			j += (int)write(STDOUT_FILENO, " ", 1);
+			j += (int)write(fd, " ", 1);
 			i++;
 		}
 		if (!farg->flags->adjust_left)
-			j += (int)write(STDOUT_FILENO, &c, 1);
+			j += (int)write(fd, &c, 1);
 		return (j);
 	}
-	return (cprintf(farg, c));
+	return (cprintf(fd, farg, c));
 }
 
-int	vprint_str(t_list **dyn, const t_fmt_arg *farg, va_list args)
+int	vprint_str(t_list **dyn, const int fd, const t_fmt_arg *farg, va_list args)
 {
 	char	*str;
 	char	*temp;
@@ -78,11 +78,11 @@ int	vprint_str(t_list **dyn, const t_fmt_arg *farg, va_list args)
 		temp = gc_substr(dyn, str, 0, *(farg->prec));
 	else
 		temp = gc_strdup(dyn, str);
-	i = sprint_f(farg, temp);
+	i = sprint_f(fd, farg, temp);
 	return (i);
 }
 
-int	vprint_int(t_list **dyn, const t_fmt_arg *farg, va_list args)
+int	vprint_int(t_list **dyn, const int fd, const t_fmt_arg *farg, va_list args)
 {
 	int		x;
 	char	*str;
@@ -92,11 +92,11 @@ int	vprint_int(t_list **dyn, const t_fmt_arg *farg, va_list args)
 	str = gc_itoa(dyn, x);
 	if (!str)
 		return (-1);
-	res = iprintf(farg, str);
+	res = iprintf(fd, farg, str);
 	return (res);
 }
 
-int	vprint_uint(t_list **dyn, const t_fmt_arg *farg, va_list args)
+int	vprint_uint(t_list **dyn, const int fd, const t_fmt_arg *farg, va_list args)
 {
 	unsigned int	x;
 	char			*str;
@@ -106,6 +106,6 @@ int	vprint_uint(t_list **dyn, const t_fmt_arg *farg, va_list args)
 	str = gc_utoa(dyn, x);
 	if (!str)
 		return (-1);
-	res = uprintf(farg, str);
+	res = uprintf(fd, farg, str);
 	return (res);
 }
