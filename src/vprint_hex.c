@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	vprint_hex(t_list **dyn, const t_fmt_arg *farg, va_list args)
+int	vprint_hex(t_list **dyn, const int fd, const t_fmt_arg *farg, va_list args)
 {
 	unsigned int	u;
 	char			*str;
@@ -25,7 +25,7 @@ int	vprint_hex(t_list **dyn, const t_fmt_arg *farg, va_list args)
 		str = gc_utox_(dyn, u);
 	if (!str)
 		return (-1);
-	res = xprintf(farg, str);
+	res = xprintf(fd, farg, str);
 	return (res);
 }
 
@@ -60,7 +60,7 @@ int	ft_ulog(const size_t base, const size_t n)
 	return (1 + ft_ulog(base, n / base));
 }
 
-int	printp(t_list **dyn, const t_fmt_arg *farg, va_list args)
+int	printp(t_list **dyn, const int fd, const t_fmt_arg *farg, va_list args)
 {
 	void	*p;
 	char	*str;
@@ -70,11 +70,11 @@ int	printp(t_list **dyn, const t_fmt_arg *farg, va_list args)
 	str = ulltox(dyn, (unsigned long long)p);
 	if (!str)
 		return (-1);
-	j = pprintf(farg, str);
+	j = pprintf(fd, farg, str);
 	return (j);
 }
 
-int	iprintf(const t_fmt_arg *farg, const char *num)
+int	iprintf(const int fd, const t_fmt_arg *farg, const char *num)
 {
 	int	j;
 
@@ -83,16 +83,16 @@ int	iprintf(const t_fmt_arg *farg, const char *num)
 	{
 		if (!farg->flags->adjust_left
 			&& farg->min_width && *(farg->min_width) > *(farg->prec) + 1)
-			j += uprint_pad(*(farg->min_width) - *(farg->prec) - 1);
-		j += iprints_(farg, num);
+			j += uprint_pad(fd, *(farg->min_width) - *(farg->prec) - 1);
+		j += iprints_(fd, farg, num);
 		if (*(farg->prec) > idigit_len(num))
-			j += iprint_padz(*(farg->prec) - idigit_len(num));
-		j += iprint_digits(num);
+			j += iprint_padz(fd, *(farg->prec) - idigit_len(num));
+		j += iprint_digits(fd, num);
 		if (farg->flags->adjust_left
 			&& farg->min_width && *(farg->min_width) > *(farg->prec) + 1)
-			j += uprint_pad(*(farg->min_width) - *(farg->prec) - 1);
+			j += uprint_pad(fd, *(farg->min_width) - *(farg->prec) - 1);
 		return (j);
 	}
 	else
-		return (iprintf2(farg, num));
+		return (iprintf2(fd, farg, num));
 }

@@ -17,7 +17,7 @@ _Bool	is_conv_spec(const char c)
 	return (c == 'c' || c == 's'
 		|| c == 'p' || c == 'd' || c == 'i'
 		|| c == 'u' || c == 'x' || c == 'X'
-		|| c == '%');
+		|| c == '%' || c == 'v');
 }
 
 void	preproc_flags(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i)

@@ -12,26 +12,26 @@
 
 #include "ft_printf.h"
 
-int	pprintf(const t_fmt_arg *farg, const char *p)
+int	pprintf(const int fd, const t_fmt_arg *farg, const char *p)
 {
 	int	j;
 
 	j = 0;
 	if (*p == '0')
-		return (pprintf(farg, "(nil)"));
+		return (pprintf(fd, farg, "(nil)"));
 	else
 	{
 		if (!(farg->flags && farg->flags->adjust_left)
 			&& farg->min_width
 			&& *(farg->min_width) > (*p != '(') * 2 + ft_strlen(p))
-			j = uprint_pad(*(farg->min_width) - (*p != '(') * 2 - ft_strlen(p));
+			j = uprint_pad(fd, *(farg->min_width) - (*p != '(') * 2 - ft_strlen(p));
 		if (*p != '(')
-			j += (int)write(STDOUT_FILENO, "0x", 2);
-		j += (int)write(STDOUT_FILENO, p, ft_strlen(p));
+			j += (int)write(fd, "0x", 2);
+		j += (int)write(fd, p, ft_strlen(p));
 		if (farg->flags && farg->flags->adjust_left
 			&& farg->min_width
 			&& *(farg->min_width) > (*p != '(') * 2 + ft_strlen(p))
-			j += uprint_pad(*(farg->min_width)
+			j += uprint_pad(fd, *(farg->min_width)
 					- (*p != '(') * 2 - ft_strlen(p));
 		return (j);
 	}
@@ -45,7 +45,7 @@ unsigned long long	ulllog(const unsigned long long base,
 	return (1 + ulllog(base, ul / base));
 }
 
-int	cprintf(const t_fmt_arg *farg, const unsigned char c)
+int	cprintf(const int fd, const t_fmt_arg *farg, const unsigned char c)
 {
 	int		j;
 	size_t	i;
@@ -56,13 +56,13 @@ int	cprintf(const t_fmt_arg *farg, const unsigned char c)
 	{
 		while (i < *(farg->min_width) - 1)
 		{
-			j += (int)write(STDOUT_FILENO, " ", 1);
+			j += (int)write(fd, " ", 1);
 			i++;
 		}
-		j += (int)write(STDOUT_FILENO, &c, 1);
+		j += (int)write(fd, &c, 1);
 		return (j);
 	}
-	return ((int)write(STDOUT_FILENO, &c, 1));
+	return ((int)write(fd, &c, 1));
 }
 
 size_t	usize_max(const size_t a, const size_t b)

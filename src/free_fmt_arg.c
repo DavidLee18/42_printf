@@ -27,26 +27,28 @@ t_flags	*init_flags(t_list **dyn)
 	return (f);
 }
 
-int	print_per(const t_fmt_arg *farg)
+int	print_per(const int fd, const t_fmt_arg *farg)
 {
+	int	i;
 	int	j;
 
+	i = 0;
 	if (farg->min_width)
 	{
 		if (farg->flags && farg->flags->adjust_left)
-			write(STDOUT_FILENO, "%", 1);
+			i += (int)write(fd, "%", 1);
 		j = -1;
 		while ((size_t)++j < *(farg->min_width))
-			write(STDOUT_FILENO, " ", 1);
+			i += (int)write(fd, " ", 1);
 		if (!(farg->flags && farg->flags->adjust_left))
-			write(STDOUT_FILENO, " ", 1);
-		return (*(farg->min_width));
+			i += (int)write(fd, " ", 1);
+		return (i);
 	}
 	else
-		return ((int)write(STDOUT_FILENO, "%", 1));
+		return ((int)write(fd, "%", 1));
 }
 
-int	sprint_f(const t_fmt_arg *farg, const char *str)
+int	sprint_f(const int fd, const t_fmt_arg *farg, const char *str)
 {
 	int		j;
 	size_t	l;
@@ -59,19 +61,19 @@ int	sprint_f(const t_fmt_arg *farg, const char *str)
 	if (farg->min_width && *(farg->min_width) > l)
 	{
 		if (farg->flags && farg->flags->adjust_left)
-			j += (int)write(STDOUT_FILENO, str, l);
-		j += uprint_pad(*(farg->min_width) - l);
+			j += (int)write(fd, str, l);
+		j += uprint_pad(fd, *(farg->min_width) - l);
 		if (!(farg->flags && farg->flags->adjust_left))
-			j += (int)write(STDOUT_FILENO, str, l);
+			j += (int)write(fd, str, l);
 		return (j);
 	}
 	else if (l > 0)
-		return ((int)write(STDOUT_FILENO, str, l));
+		return ((int)write(fd, str, l));
 	else
 		return (0);
 }
 
-int	uprintf(const t_fmt_arg *farg, const char *num)
+int	uprintf(const int fd, const t_fmt_arg *farg, const char *num)
 {
 	int		j;
 	size_t	l;
@@ -83,16 +85,40 @@ int	uprintf(const t_fmt_arg *farg, const char *num)
 				*(farg->prec) + isignof(num));
 		if (!(farg->flags && farg->flags->adjust_left)
 			&& farg->min_width && *(farg->min_width) > l)
-			j += uprint_pad(*(farg->min_width) - l);
+			j += uprint_pad(fd, *(farg->min_width) - l);
 		if (*(farg->prec) > ft_strlen(num))
-			j += uprint_padz(*(farg->prec) - ft_strlen(num));
+			j += uprint_padz(fd, *(farg->prec) - ft_strlen(num));
 		if (*(farg->prec) || *num != '0')
-			j += (int)write(STDOUT_FILENO, num, ft_strlen(num));
+			j += (int)write(fd, num, ft_strlen(num));
 		if (farg->flags && farg->flags->adjust_left
 			&& farg->min_width && *(farg->min_width) > l)
-			j += uprint_pad(*(farg->min_width) - l);
+			j += uprint_pad(fd, *(farg->min_width) - l);
 		return (j);
 	}
 	else
-		return (uprintf2(farg, num));
+		return (uprintf2(fd, farg, num));
+}
+
+int	print_vec2(t_list **dyn, int fd, const t_fmt_arg *farg, t_vec v)
+{
+	size_t	i;
+	int		j;
+	char	*str;
+
+	j = 0;
+	if (farg->flags == NULL || !farg->flags->adjust_left)
+	{
+		i = 0;
+		while (++i <= v.len)
+		{
+			str = gc_itoa(dyn, v.ptr[i - 1]);
+			if (str == NULL)
+				return (-1);
+			j += (int)write(fd, str, ft_strlen(str));
+			if (i != v.len)
+				j += (int)write(fd, ", ", 2);
+		}
+	}
+	j += (int)write(fd, "]", 1);
+	return (j);
 }

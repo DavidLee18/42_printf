@@ -35,25 +35,25 @@ typedef struct s_fmt_arg
 	size_t	end;
 }	t_fmt_arg;
 
-int					ft_printf(const char *fmt, ...);
+int					ft_fprintf(int fd, const char *fmt, ...);
 
-int					ft_vprintf(t_list **dyn, const char *fmt, va_list args);
+int					ft_vprintf(t_list **dyn, int fd, const char *fmt, va_list args);
 
 t_fmt_arg			*fst_fmt_arg(t_list **dyn, const char *fmt);
 
-int					vprint_fmt(t_list **dyn, t_fmt_arg *farg, va_list args);
+int					vprint_fmt(t_list **dyn, int fd, t_fmt_arg *farg, va_list args);
 
 int					sum_or_error(const int i, const int j, const int k);
 
-int					vprint_chr(const t_fmt_arg *farg, va_list args);
+int					vprint_chr(int fd, const t_fmt_arg *farg, const va_list args);
 
-int					vprint_str(t_list **dyn, const t_fmt_arg *farg, va_list args);
+int					vprint_str(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
 
-int					vprint_hex(t_list **dyn, const t_fmt_arg *farg, va_list args);
+int					vprint_hex(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
 
-int					vprint_int(t_list **dyn, const t_fmt_arg *farg, va_list args);
+int					vprint_int(t_list **dyn, int fd, const t_fmt_arg *farg, const va_list args);
 
-int					vprint_uint(t_list **dyn, const t_fmt_arg *farg, va_list args);
+int					vprint_uint(t_list **dyn, int fd, const t_fmt_arg *farg, const va_list args);
 
 char				*gc_utoa(t_list **dyn, unsigned int u);
 
@@ -82,61 +82,65 @@ t_fmt_arg			*init_fmt_arg(t_list **dyn);
 
 t_flags				*init_flags(t_list **dyn);
 
-int					print_per(const t_fmt_arg *farg);
+int					print_per(int fd, const t_fmt_arg *farg);
 
-int					printp(t_list **dyn, const t_fmt_arg *farg, va_list args);
+int					printp(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
 
-int					sprint_f(const t_fmt_arg *farg, const char *str);
+int					sprint_f(int fd, const t_fmt_arg *farg, const char *str);
 
-int					uprintf(const t_fmt_arg *farg, const char *num);
+int					uprintf(int fd, const t_fmt_arg *farg, const char *num);
 
-int					uprint_pad(const size_t len);
+int					uprint_pad(int fd, size_t len);
 
-int					uprintf2(const t_fmt_arg *farg, const char *num);
+int					uprintf2(int fd, const t_fmt_arg *farg, const char *num);
 
-int					uprint_padz(const size_t len);
+int					uprint_padz(int fd, size_t len);
 
-int					xprintf(const t_fmt_arg *farg, const char *num);
+int					xprintf(int fd, const t_fmt_arg *farg, const char *num);
 
-int					xprintf2(const t_fmt_arg *farg, const char *num);
+int					xprintf2(int fd, const t_fmt_arg *farg, const char *num);
 
-int					iprintf(const t_fmt_arg *farg, const char *num);
+int					iprintf(int fd, const t_fmt_arg *farg, const char *num);
 
-int					iprints_(const t_fmt_arg *farg, const char *num);
+int					iprints_(int fd, const t_fmt_arg *farg, const char *num);
 
-int					iprint_padz(const size_t len);
+int					iprint_padz(int fd, size_t len);
 
 size_t				idigit_len(const char *num);
 
-int					iprintf2(const t_fmt_arg *farg, const char *num);
+int					iprintf2(int fd, const t_fmt_arg *farg, const char *num);
 
 _Bool				isignof(const char *num);
 
-int					iprintf3(const t_fmt_arg *farg, const char *num);
+int					iprintf3(int fd, const t_fmt_arg *farg, const char *num);
 
-int					iprint_digits(const char *num);
+int					iprint_digits(int fd, const char *num);
 
-int					iprintf4(const t_fmt_arg *farg, const char *num);
+int					iprintf4(int fd, const t_fmt_arg *farg, const char *num);
 
-int					iprintf5(const t_fmt_arg *farg, const char *num);
+int					iprintf5(int fd, const t_fmt_arg *farg, const char *num);
 
-int					iprintf6(const t_fmt_arg *farg, const char *num);
+int					iprintf6(int fd, const t_fmt_arg *farg, const char *num);
 
-int					xprintf3(const t_fmt_arg *farg, const char *num);
+int					xprintf3(int fd, const t_fmt_arg *farg, const char *num);
 
-int					xprintf4(const t_fmt_arg *farg, const char *num);
+int					xprintf4(int fd, const t_fmt_arg *farg, const char *num);
 
-int					xprintf5(const t_fmt_arg *farg, const char *num);
+int					xprintf5(int fd, const t_fmt_arg *farg, const char *num);
 
 char				*ulltox(t_list **dyn, unsigned long long p);
 
-int					pprintf(const t_fmt_arg *farg, const char *p);
+int					pprintf(int fd, const t_fmt_arg *farg, const char *p);
 
 unsigned long long	ulllog(unsigned long long base,
 						unsigned long long ul);
 
-int					cprintf(const t_fmt_arg *farg, unsigned char c);
+int					cprintf(int fd, const t_fmt_arg *farg, unsigned char c);
 
 size_t				usize_max(size_t a, size_t b);
+
+int					print_vec(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
+
+int					print_vec2(t_list **dyn, int fd, const t_fmt_arg *farg, t_vec v);
 
 #endif

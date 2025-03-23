@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	iprintf3(const t_fmt_arg *farg, const char *num)
+int	iprintf3(const int fd, const t_fmt_arg *farg, const char *num)
 {
 	int	j;
 
@@ -21,32 +21,32 @@ int	iprintf3(const t_fmt_arg *farg, const char *num)
 	{
 		if (farg->min_width
 			&& *(farg->min_width) > *(farg->prec) + isignof(num))
-			j += uprint_pad(*(farg->min_width) - *(farg->prec) - isignof(num));
+			j += uprint_pad(fd, *(farg->min_width) - *(farg->prec) - isignof(num));
 		if (*(farg->prec) || *num != '0')
-			j += iprints_(farg, num);
+			j += iprints_(fd, farg, num);
 		if (*(farg->prec) > idigit_len(num))
-			j += iprint_padz(*(farg->prec) - idigit_len(num));
+			j += iprint_padz(fd, *(farg->prec) - idigit_len(num));
 		if (*(farg->prec) || *num != '0')
-			j += iprint_digits(num);
+			j += iprint_digits(fd, num);
 		return (j);
 	}
 	else
-		return (iprintf4(farg, num));
+		return (iprintf4(fd, farg, num));
 }
 
-int	iprint_digits(const char *num)
+int	iprint_digits(const int fd, const char *num)
 {
 	int	j;
 
 	j = 0;
 	if (!isignof(num))
-		j = (int)write(STDOUT_FILENO, num, ft_strlen(num));
+		j = (int)write(fd, num, ft_strlen(num));
 	else
-		j = (int)write(STDOUT_FILENO, num + 1, ft_strlen(num) - 1);
+		j = (int)write(fd, num + 1, ft_strlen(num) - 1);
 	return (j);
 }
 
-int	iprintf4(const t_fmt_arg *farg, const char *num)
+int	iprintf4(const int fd, const t_fmt_arg *farg, const char *num)
 {
 	int	j;
 
@@ -56,22 +56,22 @@ int	iprintf4(const t_fmt_arg *farg, const char *num)
 		if (!farg->flags->adjust_left && !farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > idigit_len(num) + 1)
-			j += uprint_pad(*(farg->min_width) - idigit_len(num) - 1);
-		j += iprints_(farg, num);
+			j += uprint_pad(fd, *(farg->min_width) - idigit_len(num) - 1);
+		j += iprints_(fd, farg, num);
 		if (!farg->flags->adjust_left && farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > idigit_len(num) + 1)
-			j += iprint_padz(*(farg->min_width) - idigit_len(num) - 1);
-		j += iprint_digits(num);
+			j += iprint_padz(fd, *(farg->min_width) - idigit_len(num) - 1);
+		j += iprint_digits(fd, num);
 		if (farg->flags->adjust_left && farg->min_width
 			&& *(farg->min_width) > idigit_len(num) + 1)
-			j += uprint_pad(*(farg->min_width) - idigit_len(num) - 1);
+			j += uprint_pad(fd, *(farg->min_width) - idigit_len(num) - 1);
 		return (j);
 	}
-	return (iprintf5(farg, num));
+	return (iprintf5(fd, farg, num));
 }
 
-int	iprintf5(const t_fmt_arg *farg, const char *num)
+int	iprintf5(const int fd, const t_fmt_arg *farg, const char *num)
 {
 	int	j;
 
@@ -81,22 +81,22 @@ int	iprintf5(const t_fmt_arg *farg, const char *num)
 		if (!farg->flags->adjust_left && !farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > ft_strlen(num))
-			j += uprint_pad(*(farg->min_width) - ft_strlen(num));
-		j += iprints_(farg, num);
+			j += uprint_pad(fd, *(farg->min_width) - ft_strlen(num));
+		j += iprints_(fd, farg, num);
 		if (!farg->flags->adjust_left && farg->flags->pad_zero
 			&& farg->min_width
 			&& *(farg->min_width) > ft_strlen(num))
-			j += iprint_padz(*(farg->min_width) - ft_strlen(num));
-		j += iprint_digits(num);
+			j += iprint_padz(fd, *(farg->min_width) - ft_strlen(num));
+		j += iprint_digits(fd, num);
 		if (farg->flags->adjust_left && farg->min_width
 			&& *(farg->min_width) > ft_strlen(num))
-			j += uprint_pad(*(farg->min_width) - ft_strlen(num));
+			j += uprint_pad(fd, *(farg->min_width) - ft_strlen(num));
 		return (j);
 	}
-	return (iprintf6(farg, num));
+	return (iprintf6(fd, farg, num));
 }
 
-int	iprintf6(const t_fmt_arg *farg, const char *num)
+int	iprintf6(const int fd, const t_fmt_arg *farg, const char *num)
 {
 	int		j;
 	size_t	l;
@@ -104,7 +104,7 @@ int	iprintf6(const t_fmt_arg *farg, const char *num)
 	l = ft_strlen(num);
 	j = 0;
 	if (farg->min_width && *(farg->min_width) > l)
-		j += uprint_pad(*(farg->min_width) - l);
-	j += (int)write(STDOUT_FILENO, num, l);
+		j += uprint_pad(fd, *(farg->min_width) - l);
+	j += (int)write(fd, num, l);
 	return (j);
 }
