@@ -6,7 +6,7 @@
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 14:54:53 by jaehylee          #+#    #+#             */
-/*   Updated: 2024/10/25 14:54:53 by jaehylee         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:42:24 by jaehylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	pprintf(const int fd, const t_fmt_arg *farg, const char *p)
 		if (!(farg->flags && farg->flags->adjust_left)
 			&& farg->min_width
 			&& *(farg->min_width) > (*p != '(') * 2 + ft_strlen(p))
-			j = uprint_pad(fd, *(farg->min_width) - (*p != '(') * 2 - ft_strlen(p));
+			j = uprint_pad(fd,
+					*(farg->min_width) - (*p != '(') * 2 - ft_strlen(p));
 		if (*p != '(')
 			j += (int)write(fd, "0x", 2);
 		j += (int)write(fd, p, ft_strlen(p));

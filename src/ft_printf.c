@@ -6,7 +6,7 @@
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 00:17:11 by jaehylee          #+#    #+#             */
-/*   Updated: 2024/10/12 00:17:11 by jaehylee         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:42:53 by jaehylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_vprintf(t_list **dyn, const int fd, const char *fmt, const va_list args)
 		return (flag2);
 	if (fmt[arg->end + 1])
 		return (sum_or_error(flag, flag2,
-					ft_vprintf(dyn, fd, fmt + arg->end + 1, args)));
+				ft_vprintf(dyn, fd, fmt + arg->end + 1, args)));
 	return (flag + flag2);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:53:33 by jaehylee          #+#    #+#             */
-/*   Updated: 2024/10/24 15:53:33 by jaehylee         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:42:04 by jaehylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	iprintf3(const int fd, const t_fmt_arg *farg, const char *num)
 	{
 		if (farg->min_width
 			&& *(farg->min_width) > *(farg->prec) + isignof(num))
-			j += uprint_pad(fd, *(farg->min_width) - *(farg->prec) - isignof(num));
+			j += uprint_pad(fd,
+					*(farg->min_width) - *(farg->prec) - isignof(num));
 		if (*(farg->prec) || *num != '0')
 			j += iprints_(fd, farg, num);
 		if (*(farg->prec) > idigit_len(num))

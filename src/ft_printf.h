@@ -6,7 +6,7 @@
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:41:54 by jaehylee          #+#    #+#             */
-/*   Updated: 2024/10/14 12:57:10 by jaehylee         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:49:34 by jaehylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,30 @@ typedef struct s_fmt_arg
 
 int					ft_fprintf(int fd, const char *fmt, ...);
 
-int					ft_vprintf(t_list **dyn, int fd, const char *fmt, va_list args);
+int					ft_vprintf(t_list **dyn, int fd, const char *fmt,
+						va_list args);
 
 t_fmt_arg			*fst_fmt_arg(t_list **dyn, const char *fmt);
 
-int					vprint_fmt(t_list **dyn, int fd, t_fmt_arg *farg, va_list args);
+int					vprint_fmt(t_list **dyn, int fd, t_fmt_arg *farg,
+						va_list args);
 
 int					sum_or_error(const int i, const int j, const int k);
 
-int					vprint_chr(int fd, const t_fmt_arg *farg, const va_list args);
+int					vprint_chr(int fd, const t_fmt_arg *farg,
+						const va_list args);
 
-int					vprint_str(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
+int					vprint_str(t_list **dyn, int fd, const t_fmt_arg *farg,
+						const va_list args);
 
-int					vprint_hex(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
+int					vprint_hex(t_list **dyn, int fd, const t_fmt_arg *farg,
+						const va_list args);
 
-int					vprint_int(t_list **dyn, int fd, const t_fmt_arg *farg, const va_list args);
+int					vprint_int(t_list **dyn, int fd, const t_fmt_arg *farg,
+						const va_list args);
 
-int					vprint_uint(t_list **dyn, int fd, const t_fmt_arg *farg, const va_list args);
+int					vprint_uint(t_list **dyn, int fd, const t_fmt_arg *farg,
+						const va_list args);
 
 char				*gc_utoa(t_list **dyn, unsigned int u);
 
@@ -65,11 +72,14 @@ char				*gc_utox_(t_list **dyn, unsigned int u);
 
 _Bool				is_conv_spec(const char c);
 
-void				preproc_flags(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i);
+void				preproc_flags(t_list **dyn, const char *fmt, t_fmt_arg *arg,
+						size_t *i);
 
-void				parse_width(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i);
+void				parse_width(t_list **dyn, const char *fmt, t_fmt_arg *arg,
+						size_t *i);
 
-void				parse_prec(t_list **dyn, const char *fmt, t_fmt_arg *arg, size_t *i);
+void				parse_prec(t_list **dyn, const char *fmt, t_fmt_arg *arg,
+						size_t *i);
 
 _Bool				parse_conv_spec(const char *fmt,
 						t_fmt_arg *arg, const size_t i);
@@ -84,7 +94,8 @@ t_flags				*init_flags(t_list **dyn);
 
 int					print_per(int fd, const t_fmt_arg *farg);
 
-int					printp(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
+int					printp(t_list **dyn, int fd, const t_fmt_arg *farg,
+						va_list args);
 
 int					sprint_f(int fd, const t_fmt_arg *farg, const char *str);
 
@@ -139,8 +150,10 @@ int					cprintf(int fd, const t_fmt_arg *farg, unsigned char c);
 
 size_t				usize_max(size_t a, size_t b);
 
-int					print_vec(t_list **dyn, int fd, const t_fmt_arg *farg, va_list args);
+int					print_vec(t_list **dyn, int fd, const t_fmt_arg *farg,
+						va_list args);
 
-int					print_vec2(t_list **dyn, int fd, const t_fmt_arg *farg, t_vec v);
+int					print_vec2(t_list **dyn, int fd, const t_fmt_arg *farg,
+						t_vec v);
 
 #endif
