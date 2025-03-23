@@ -1,4 +1,4 @@
-CFLAGS := -Wall -Werror -Wextra -g -O2 -foptimize-sibling-calls
+CFLAGS := -Wall -Werror -Wextra -O2 -foptimize-sibling-calls
 NAME := libftprintf.a
 
 BUILD_DIR := build
