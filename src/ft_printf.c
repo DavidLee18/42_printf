@@ -6,7 +6,7 @@
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 00:17:11 by jaehylee          #+#    #+#             */
-/*   Updated: 2025/03/23 14:42:53 by jaehylee         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:08:35 by jaehylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_fprintf(const int fd, const char *fmt, ...)
 	return (gc_free_all(dyn), res);
 }
 
-int	ft_vprintf(t_list **dyn, const int fd, const char *fmt, const va_list args)
+int	ft_vprintf(t_list **dyn, const int fd, const char *fmt, va_list args)
 {
 	t_fmt_arg	*arg;
 	int			flag;

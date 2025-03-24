@@ -6,7 +6,7 @@
 /*   By: jaehylee <jaehylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:41:54 by jaehylee          #+#    #+#             */
-/*   Updated: 2025/03/23 14:49:34 by jaehylee         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:09:57 by jaehylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,19 @@ int					vprint_fmt(t_list **dyn, int fd, t_fmt_arg *farg,
 int					sum_or_error(const int i, const int j, const int k);
 
 int					vprint_chr(int fd, const t_fmt_arg *farg,
-						const va_list args);
+						va_list args);
 
 int					vprint_str(t_list **dyn, int fd, const t_fmt_arg *farg,
-						const va_list args);
+						va_list args);
 
 int					vprint_hex(t_list **dyn, int fd, const t_fmt_arg *farg,
-						const va_list args);
+						va_list args);
 
 int					vprint_int(t_list **dyn, int fd, const t_fmt_arg *farg,
-						const va_list args);
+						va_list args);
 
 int					vprint_uint(t_list **dyn, int fd, const t_fmt_arg *farg,
-						const va_list args);
+						va_list args);
 
 char				*gc_utoa(t_list **dyn, unsigned int u);
 
